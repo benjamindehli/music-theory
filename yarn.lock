@@ -180,6 +180,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@benjamindehli/music-utils@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@benjamindehli/music-utils@npm:2.2.0"
+  checksum: 10c0/edb0302b3e2048b3e593923a7cc5a69542fcaad084b2567f3b388f3a821f6d374f33e8d056bef37e80f3f32f8c2432e55f7eccecfb10bb406eab3ba6255ee47e
+  languageName: node
+  linkType: hard
+
 "@emnapi/core@npm:^1.4.3":
   version: 1.9.1
   resolution: "@emnapi/core@npm:1.9.1"
@@ -2838,6 +2845,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "music-theory@workspace:."
   dependencies:
+    "@benjamindehli/music-utils": "npm:^2.2.0"
     babel-plugin-react-compiler: "npm:1.0.0"
     eslint: "npm:^9"
     eslint-config-next: "npm:16.2.0"
