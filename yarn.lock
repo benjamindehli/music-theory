@@ -180,10 +180,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@benjamindehli/music-utils@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "@benjamindehli/music-utils@npm:2.2.0"
-  checksum: 10c0/edb0302b3e2048b3e593923a7cc5a69542fcaad084b2567f3b388f3a821f6d374f33e8d056bef37e80f3f32f8c2432e55f7eccecfb10bb406eab3ba6255ee47e
+"@benjamindehli/music-utils@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@benjamindehli/music-utils@npm:3.0.0"
+  checksum: 10c0/de7c0d85018ff38edc2c68e3978c8672042f80ca4c19233e76038946e9498d5a2c9e92789ce94cb7f12c993eb46a98e3df301146d74e123bd156973e2b693ae4
   languageName: node
   linkType: hard
 
@@ -2845,7 +2845,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "music-theory@workspace:."
   dependencies:
-    "@benjamindehli/music-utils": "npm:^2.2.0"
+    "@benjamindehli/music-utils": "npm:^3.0.0"
     babel-plugin-react-compiler: "npm:1.0.0"
     eslint: "npm:^9"
     eslint-config-next: "npm:16.2.0"
