@@ -1,13 +1,16 @@
-import { chords, notes } from "@benjamindehli/music-utils";
+import { Chord, chordTypes, notes } from "@benjamindehli/music-utils";
 
 // rootNote D# == slug D-sharp
 
 export function getChordBySlug(slug) {
     if (!slug) return null;
-    const rootNote = translateFromSlug(slug.split("-")[0]);
+    const rootNoteName = translateFromSlug(slug.split("-")[0]);
     const chordName = translateFromSlug(slug.split("-").slice(1).join("-"));
-    const chord = chords.find((chord) => chord.name === chordName);
-    return { ...chord, rootNote: rootNote?.toUpperCase() };
+    const chordType = chordTypes.find((chordType) => chordType.name === chordName);
+    const rootNote = notes.find((note) => note.name === rootNoteName);
+    const chord = new Chord({ rootNote, chordType });
+    console.log({ chord, slug, rootNote, chordName, chordType });
+    return chord;
 }
 
 function translateToSlug(string) {
@@ -20,19 +23,15 @@ function translateFromSlug(string) {
 
 export function getAllChordSlugs() {
     return notes.flatMap((note) => {
-        return chords.map((chord) => {
-            const chordSlug = [note.name, chord.name].filter(Boolean).map(translateToSlug).join("-");
-            return {
-                params: {
-                    chordSlug
-                }
-            };
+        return chordTypes.map((chordType) => {
+            const chordSlug = [note.name, chordType.name].filter(Boolean).map(translateToSlug).join("-");
+            return chordSlug;
         });
     });
 }
 
 export function getAllChords() {
-    return chords;
+    return chordTypes;
 }
 
 export function getAllNotes() {
