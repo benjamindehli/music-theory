@@ -17,7 +17,7 @@ async function generateSvgForChord(rootNote, chordType, bassNote) {
     const notesInChord = chordType.halfSteps.map((halfStep) => rootNote.number + halfStep);
     let filenameBase = getSlugForChord(rootNote, chordType);
     if (bassNote) {
-        filenameBase += `_${bassNote.name}`;
+        filenameBase += `_${bassNote.name.replace("#", "sharp").replace("b", "flat")}`;
     }
     const svgPath = path.join(OUTPUT_CHORDS_DIR, "svg", `${filenameBase}.svg`);
     const pngPath = path.join(OUTPUT_CHORDS_DIR, "png", `${filenameBase}.png`);
