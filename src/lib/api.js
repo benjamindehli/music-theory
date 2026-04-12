@@ -1,6 +1,5 @@
-import { Chord, chordTypes, notes } from "@benjamindehli/music-utils";
-
-// rootNote D# == slug D-sharp
+import { Chord, chordTypes, getChordsFromSelectedNotes, intervals, notes } from "@benjamindehli/music-utils";
+import sharp from "sharp";
 
 export function getChordBySlug(slug) {
     if (!slug) return null;
@@ -9,16 +8,29 @@ export function getChordBySlug(slug) {
     const chordType = chordTypes.find((chordType) => chordType.name === chordName);
     const rootNote = notes.find((note) => note.name === rootNoteName);
     const chord = new Chord({ rootNote, chordType });
-    console.log({ chord, slug, rootNote, chordName, chordType });
     return chord;
 }
 
-function translateToSlug(string) {
-    return string.replace("#", "sharp").replace("b", "flat");
+export function getNoteBySlug(slug) {
+    if (!slug) return null;
+    const noteName = translateFromSlug(slug);
+    const note = notes.find((note) => note.name === noteName);
+    return note;
 }
 
-function translateFromSlug(string) {
-    return string.replace("sharp", "#").replace("flat", "b");
+export function getIntervalsForChordType(chordType) {
+    const intervalsForChordType = chordType.halfSteps.map((halfStep) => {
+        return intervals.find((i) => i.number === halfStep);
+    });
+    return intervalsForChordType;
+}
+
+export function translateToSlug(string) {
+    return string.replace("#", "sharp").replace("b", "flat").replaceAll(/\s+/g, "-");
+}
+
+export function translateFromSlug(string) {
+    return string.replace("sharp", "#").replace("flat", "b").replaceAll("-", " ");
 }
 
 export function getAllChordSlugs() {
@@ -30,10 +42,44 @@ export function getAllChordSlugs() {
     });
 }
 
-export function getAllChords() {
+export function getAllNotes() {
+    return notes;
+}
+
+export function getAllChordTypes() {
     return chordTypes;
 }
 
-export function getAllNotes() {
-    return notes;
+export function getSlugForChord(note, chordType) {
+    const chordSlug = [note.name, chordType.name].filter(Boolean).map(translateToSlug).join("-");
+    return chordSlug;
+}
+
+export function getSlugForNote(note) {
+    return translateToSlug(note.name);
+}
+
+export function getImagePngUrlForChordSlug(chordSlug) {
+    return `/images/chords/png/${chordSlug}.png`;
+}
+
+export function getImageSvgUrlForChordSlug(chordSlug) {
+    return `/images/chords/svg/${chordSlug}.svg`;
+}
+
+export function getAbsoluteNoteNumber(relativeNoteNumber, rootNoteNumber) {
+    return rootNoteNumber + relativeNoteNumber;
+}
+
+export function getChordMatches(noteNumbers) {
+    return getChordsFromSelectedNotes(noteNumbers);
+}
+
+export async function getImageDimensions(imagePath) {
+    try {
+        const { width, height } = await sharp(imagePath).metadata();
+        return { width, height };
+    } catch (error) {
+        console.error("Error reading image metadata:", error);
+    }
 }
