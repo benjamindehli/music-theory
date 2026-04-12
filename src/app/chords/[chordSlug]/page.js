@@ -34,8 +34,8 @@ export async function getImagesWithDimensions(chordSlug) {
     const imagePaths = { png: getImagePngUrlForChordSlug(chordSlug), svg: getImageSvgUrlForChordSlug(chordSlug) };
     const imagesWithSizes = {};
     for (const [format, path] of Object.entries(imagePaths)) {
-        const dimensions = await getImageDimensions(`public${path}`);
-        imagesWithSizes[format] = { url: path, ...dimensions };
+        const dimensions = await getImageDimensions(path);
+        imagesWithSizes[format] = { url: `/${process.env.PAGES_BASE_PATH}${path}`, ...dimensions };
     }
     return imagesWithSizes;
 }

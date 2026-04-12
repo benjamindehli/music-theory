@@ -1,4 +1,5 @@
 import { getAllNotes, getAllChordTypes, getSlugForChord } from "@/lib/api";
+import Link from "next/link";
 
 export default function Home() {
     const notes = getAllNotes();
@@ -18,9 +19,9 @@ export default function Home() {
                                         const chordSlug = getSlugForChord(note, chordType);
                                         return (
                                             <li key={chordSlug}>
-                                                <a href={`/chords/${chordSlug}`}>
+                                                <Link href={`/chords/${chordSlug}`}>
                                                     {note.name} {chordType.name}
-                                                </a>
+                                                </Link>
                                             </li>
                                         );
                                     })}

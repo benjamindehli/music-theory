@@ -77,7 +77,7 @@ export function getChordMatches(noteNumbers) {
 
 export async function getImageDimensions(imagePath) {
     try {
-        const { width, height } = await sharp(imagePath).metadata();
+        const { width, height } = await sharp(`public${imagePath}`).metadata();
         return { width, height };
     } catch (error) {
         console.error("Error reading image metadata:", error);
