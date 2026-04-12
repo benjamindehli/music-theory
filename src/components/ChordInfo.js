@@ -23,7 +23,6 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
     const invertedRootMatches = filterChordMatchesByType(chordMatches, "invertedRoot"); // Inversion with same root
     const nonRootMatches = filterChordMatchesByType(chordMatches, "nonRoot"); // Different root
     const slashChordMatches = filterChordMatchesByType(chordMatches, "slashChord"); // Slash chord
-    console.log({ chordMatches, exactRootMatches, invertedRootMatches, nonRootMatches, slashChordMatches });
     return (
         <div>
             <main>

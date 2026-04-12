@@ -25,7 +25,6 @@ export default function Chords() {
         acc[numberOfNotes].push(chordType);
         return acc;
     }, {});
-    console.log({ chordTypesGroupedByNumberOfNotes });
     return (
         <main>
             <section>
