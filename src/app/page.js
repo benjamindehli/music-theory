@@ -4,14 +4,14 @@ export default function Home() {
     const notes = getAllNotes();
     const chordTypes = getAllChordTypes();
     return (
-        <div className={styles.page}>
-            <main className={styles.main}>
+        <div>
+            <main>
                 <section>
                     <h2>Chords</h2>
                     {chordTypes
                         .sort((a, b) => a.name.localeCompare(b.name))
                         .map((chordType) => (
-                            <section key={`${chordType.name}`} className={styles.chordTypeSection}>
+                            <section key={`${chordType.name}`}>
                                 <h3>{chordType.name}</h3>
                                 <ul>
                                     {notes.map((note) => {
