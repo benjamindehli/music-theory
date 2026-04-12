@@ -77,7 +77,7 @@ export default async function Page({ params }) {
         (match) =>
             match.chord.rootNote.name !== chord.rootNote.name ||
             match.chord.chordType.name !== chord.chordType.name ||
-            match.bassNote?.name !== bassNote.name
+            match.chord.bassNote?.name !== bassNote.name
     );
 
     const imagesWithDimensions = await getImagesWithDimensions(chordSlug, bassNoteSlug);
