@@ -64,6 +64,18 @@ export async function generateStaticParams() {
     return params;
 }
 
+export async function generateMetadata({ params }) {
+    const { chordSlug, bassNoteSlug } = await params;
+    const chord = getChordBySlug(chordSlug);
+    const bassNote = getNoteBySlug(bassNoteSlug);
+    return {
+        title: chord ? `${chord.rootNote.name}${chord.chordType.name}/${bassNote.name} chord` : "",
+        description: chord
+            ? `Information about the ${chord.rootNote.name}${chord.chordType.name}/${bassNote.name} chord, including its intervals and related chords.`
+            : ""
+    };
+}
+
 export default async function Page({ params }) {
     const { chordSlug, bassNoteSlug } = await params;
     const chord = getChordBySlug(chordSlug);
