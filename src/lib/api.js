@@ -59,12 +59,14 @@ export function getSlugForNote(note) {
     return translateToSlug(note.name);
 }
 
-export function getImagePngUrlForChordSlug(chordSlug) {
-    return `/images/chords/png/${chordSlug}.png`;
+export function getImagePngUrlForChordSlug(chordSlug, bassNoteSlug) {
+    const bassNotePart = bassNoteSlug ? `_${bassNoteSlug}` : "";
+    return `/images/chords/png/${chordSlug}${bassNotePart}.png`;
 }
 
-export function getImageSvgUrlForChordSlug(chordSlug) {
-    return `/images/chords/svg/${chordSlug}.svg`;
+export function getImageSvgUrlForChordSlug(chordSlug, bassNoteSlug) {
+    const bassNotePart = bassNoteSlug ? `_${bassNoteSlug}` : "";
+    return `/images/chords/svg/${chordSlug}${bassNotePart}.svg`;
 }
 
 export function getAbsoluteNoteNumber(relativeNoteNumber, rootNoteNumber) {
