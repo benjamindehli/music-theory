@@ -42,26 +42,25 @@ function generateChordUrls() {
 
 export async function generateSitemaps() {
     // Fetch the total number of products and calculate the number of sitemaps needed
-    return [{ id: "sitemap" }, { id: "chords" }, { id: "slash-chords" }];
+    return [{ id: "main" }, { id: "chords" }, { id: "slash-chords" }];
 }
 
 export default async function sitemap(props) {
     const id = await props.id;
     const chordUrls = generateChordUrls();
+    const slashChordUrls = generateSlashChordUrls();
     switch (id) {
-        case "sitemap":
+        case "main":
             return [
                 {
                     url: ORIGIN,
-                    lastModified: LAST_MODIFIED,
-                    changeFrequency: "yearly",
-                    priority: 1
+                    lastModified: LAST_MODIFIED
                 }
             ];
         case "chords":
             return [...chordUrls];
         case "slash-chords":
-            return generateSlashChordUrls();
+            return [...slashChordUrls];
         default:
             return [];
     }
