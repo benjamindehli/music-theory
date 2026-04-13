@@ -55,6 +55,10 @@ export default async function sitemap(props) {
                 {
                     url: ORIGIN,
                     lastModified: LAST_MODIFIED
+                },
+                {
+                    url: `${ORIGIN}chords`,
+                    lastModified: LAST_MODIFIED
                 }
             ];
         case "chords":
