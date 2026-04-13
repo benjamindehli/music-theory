@@ -1,3 +1,4 @@
+import Breadcrumbs from "@/components/Breadcrumbs";
 import ChordInfo from "@/components/ChordInfo";
 import {
     getAllChordTypes,
@@ -94,11 +95,14 @@ export default async function Page({ params }) {
 
     const imagesWithDimensions = await getImagesWithDimensions(chordSlug, bassNoteSlug);
     return (
-        <ChordInfo
-            chord={chord}
-            intervalsForChordType={intervalsForChordType}
-            chordMatches={chordMatches}
-            imagesWithDimensions={imagesWithDimensions}
-        />
+        <>
+            <Breadcrumbs params={params} />
+            <ChordInfo
+                chord={chord}
+                intervalsForChordType={intervalsForChordType}
+                chordMatches={chordMatches}
+                imagesWithDimensions={imagesWithDimensions}
+            />
+        </>
     );
 }
