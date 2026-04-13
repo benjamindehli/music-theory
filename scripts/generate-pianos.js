@@ -2,8 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
 import { generatePianoSVG } from "../src/lib/piano.js";
-import { chordTypes, notes, intervals } from "@benjamindehli/music-utils";
-import { getSlugForChord } from "../src/lib/api.js";
+import { notes, intervals } from "@benjamindehli/music-utils";
+import { getAllChordTypes, getSlugForChord } from "../src/lib/api.js";
 
 const OUTPUT_IMAGES_DIR = path.join(process.cwd(), "public/images");
 const OUTPUT_CHORDS_DIR = path.join(process.cwd(), "public/images/chords");
@@ -69,6 +69,7 @@ async function generateSvgForChord(rootNote, chordType, bassNote) {
 }
 
 async function generate() {
+    const chordTypes = getAllChordTypes();
     for (const rootNote of notes) {
         for (const chordType of chordTypes) {
             await generateSvgForChord(rootNote, chordType);
