@@ -29,7 +29,6 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                 <h1>
                     {chord?.rootNote?.name?.toUpperCase()}
                     {chord?.chordType?.name}
-                    
                 </h1>
                 <p>
                     The {chord?.rootNote?.name?.toUpperCase()}
