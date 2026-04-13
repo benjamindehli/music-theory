@@ -1,6 +1,6 @@
 {
-  "short_name": "Dehli Musikk",
-  "name": "Dehli Musikk",
+  "short_name": "Music theory",
+  "name": "Music theory",
   "icons": [{
       "src": "favicon.ico",
       "sizes": "48x48",
@@ -33,7 +33,7 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "./music-theory/",
   "display": "standalone",
   "theme_color": "#C32A22",
   "background_color": "#ffffff"
