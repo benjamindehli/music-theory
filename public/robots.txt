@@ -1,0 +1,5 @@
+# https://www.robotstxt.org/robotstxt.html
+Sitemap: https://benjamindehli.github.io/music-theory/sitemap/main.xml
+Sitemap: https://benjamindehli.github.io/music-theory/sitemap/chords.xml
+Sitemap: https://benjamindehli.github.io/music-theory/sitemap/slash-chords.xml
+User-agent: *
