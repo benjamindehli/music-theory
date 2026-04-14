@@ -1,6 +1,7 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { getAllNotes, getAllChordTypes, getSlugForChord } from "@/lib/api";
 import Link from "next/link";
+import styles from "./page.module.css";
 
 export default async function Chords({ params }) {
     const notes = getAllNotes();
@@ -30,36 +31,36 @@ export default async function Chords({ params }) {
     return (
         <>
             <Breadcrumbs params={params} />
-            <main>
-                <section>
-                    <h1>Chords</h1>
-                    {Object.entries(chordTypesGroupedByNumberOfNotes)
-                        .sort((a, b) => a[0] - b[0])
-                        .map(([numberOfNotes, chordTypes]) => (
-                            <section key={numberOfNotes}>
-                                <h2>{chordClassificationNamesByNumberOfNotes[numberOfNotes] || `${numberOfNotes}-note`} chords</h2>
-                                {chordTypes
-                                    .sort((a, b) => a.name.localeCompare(b.name))
-                                    .map((chordType) => (
-                                        <section key={`${chordType.name}`}>
-                                            <h3>{chordType.name}</h3>
-                                            <ul>
-                                                {notes.map((note) => {
-                                                    const chordSlug = getSlugForChord(note, chordType);
-                                                    return (
-                                                        <li key={chordSlug}>
-                                                            <Link href={`/chords/${chordSlug}`}>
-                                                                {note.name} {chordType.name}
-                                                            </Link>
-                                                        </li>
-                                                    );
-                                                })}
-                                            </ul>
-                                        </section>
-                                    ))}
-                            </section>
-                        ))}
-                </section>
+            <main className={styles.main}>
+                <h1 className={styles.heading}>Chords</h1>
+                {Object.entries(chordTypesGroupedByNumberOfNotes)
+                    .sort((a, b) => a[0] - b[0])
+                    .map(([numberOfNotes, chordTypes]) => (
+                        <section key={numberOfNotes} className={styles.group}>
+                            <h2 className={styles.groupHeading}>
+                                {chordClassificationNamesByNumberOfNotes[numberOfNotes] || `${numberOfNotes}-note`} chords
+                            </h2>
+                            {chordTypes
+                                .sort((a, b) => a.name.localeCompare(b.name))
+                                .map((chordType) => (
+                                    <section key={`${chordType.name}`} className={styles.chordType}>
+                                        <h3 className={styles.chordTypeHeading}>{chordType.name}</h3>
+                                        <ul className={styles.noteList}>
+                                            {notes.map((note) => {
+                                                const chordSlug = getSlugForChord(note, chordType);
+                                                return (
+                                                    <li key={chordSlug}>
+                                                        <Link href={`/chords/${chordSlug}`}>
+                                                            {note.name} {chordType.name}
+                                                        </Link>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </section>
+                                ))}
+                        </section>
+                    ))}
             </main>
         </>
     );
