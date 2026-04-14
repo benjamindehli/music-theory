@@ -1,47 +1,19 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ChordInfo from "@/components/ChordInfo";
 import {
+    getAbsoluteNoteNumber,
     getAllChordTypes,
     getAllNotes,
     getChordBySlug,
     getChordMatches,
-    getImageDimensions,
-    getImagePngUrlForChordSlug,
-    getImageSvgUrlForChordSlug,
+    getImagesWithDimensions,
+    getIntervalsWithRelativeNotes,
     getNoteBySlug,
-    getIntervalsForChordType,
     getSlugForChord,
     getSlugForNote
 } from "@/lib/api";
 
 export const dynamicParams = false;
-
-export function getAbsoluteNoteNumber(relativeNoteNumber, rootNoteNumber) {
-    return rootNoteNumber + relativeNoteNumber;
-}
-
-function getIntervalsWithRelativeNotes(chord) {
-    const intervalsForChordType = getIntervalsForChordType(chord.chordType);
-    const intervalsWithRelativeNotes = intervalsForChordType.map((interval) => {
-        const relativeNoteNumber = getAbsoluteNoteNumber(interval.number, chord.rootNote.number);
-        const relativeNote = getAllNotes().find((note) => note.number === relativeNoteNumber % 12);
-        return {
-            ...interval,
-            relativeNote
-        };
-    });
-    return intervalsWithRelativeNotes;
-}
-
-export async function getImagesWithDimensions(chordSlug, bassNoteSlug) {
-    const imagePaths = { png: getImagePngUrlForChordSlug(chordSlug, bassNoteSlug), svg: getImageSvgUrlForChordSlug(chordSlug, bassNoteSlug) };
-    const imagesWithSizes = {};
-    for (const [format, path] of Object.entries(imagePaths)) {
-        const dimensions = await getImageDimensions(path);
-        imagesWithSizes[format] = { url: `/${process.env.PAGES_BASE_PATH}${path}`, ...dimensions };
-    }
-    return imagesWithSizes;
-}
 
 export async function generateStaticParams() {
     const notes = getAllNotes();
