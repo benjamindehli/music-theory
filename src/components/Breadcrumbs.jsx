@@ -1,6 +1,7 @@
 import { getChordBySlug, getNoteBySlug } from "@/lib/api";
 import { SITE_ORIGIN } from "@/lib/constants";
 import Link from "next/link";
+import styles from "./Breadcrumbs.module.css";
 
 const renderBreadcrumbJsonLd = (breadcrumbs) => {
     const originUrl = SITE_ORIGIN;
@@ -66,15 +67,17 @@ export default async function Breadcrumbs({ params }) {
                     __html: jsonLd.replaceAll("<", "\\u003c")
                 }}
             />
-            <nav aria-label="Breadcrumb">
+            <nav aria-label="Breadcrumb" className={styles.nav}>
                 {crumbs.map((c, i) => (
-                    <span key={c.href}>
+                    <span key={c.href} className={styles.crumb}>
                         {i < crumbs.length - 1 ? (
                             <Link href={c.href}>{c.label}</Link>
                         ) : (
-                            <span aria-current="page">{c.label}</span>
+                            <span aria-current="page" className={styles.current}>{c.label}</span>
                         )}
-                        {i < crumbs.length - 1 && " / "}
+                        {i < crumbs.length - 1 && (
+                            <span className={styles.separator} aria-hidden="true">/</span>
+                        )}
                     </span>
                 ))}
             </nav>
