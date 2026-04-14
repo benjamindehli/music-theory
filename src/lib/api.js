@@ -47,7 +47,7 @@ export function getAllNotes() {
 }
 
 export function getAllChordTypes() {
-    return chordTypes.filter((chordType) => chordType?.name?.length > 0); // Filter out chord types with empty names
+    return chordTypes;
 }
 
 export function getSlugForChord(note, chordType) {
