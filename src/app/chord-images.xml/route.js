@@ -1,5 +1,5 @@
-export const revalidate = 1;
 import { getAllChordTypes, getAllNotes, getImagePngUrlForChordSlug, getImageSvgUrlForChordSlug, getSlugForChord } from "@/lib/api";
+import { SITE_ORIGIN } from "@/lib/constants";
 
 function generateImageElementsForChordImageUrl(chordImage, chordImageUrl) {
     return `
@@ -31,8 +31,11 @@ export async function GET() {
             const chordSlug = getSlugForChord(note, chordType);
             const title = `${note.name}${chordType.name} chord`;
             const caption = `Piano keys with the notes for a ${title} highlighted.`;
-            const pageLoc = `https://benjamindehli.github.io/music-theory/chords/${chordSlug}`;
-            const imageLocs = [getImagePngUrlForChordSlug(chordSlug), getImageSvgUrlForChordSlug(chordSlug)];
+            const pageLoc = `${SITE_ORIGIN}/chords/${chordSlug}`;
+            const imageLocs = [
+                `${SITE_ORIGIN}${getImagePngUrlForChordSlug(chordSlug)}`,
+                `${SITE_ORIGIN}${getImageSvgUrlForChordSlug(chordSlug)}`
+            ];
             return { pageLoc, imageLocs, title, caption };
         });
     });
