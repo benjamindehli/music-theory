@@ -4,7 +4,8 @@ const nextConfig = {
   reactCompiler: true,
   basePath: "/music-theory",
   output: "export",
-  assetPrefix: "/music-theory/"
+  assetPrefix: "/music-theory/",
+  trailingSlash: true
 };
 
 export default nextConfig;
