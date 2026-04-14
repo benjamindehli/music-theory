@@ -1,14 +1,19 @@
 import { getSlugForChord, getSlugForNote } from "@/lib/api";
 import Link from "next/link";
-import PropTypes from "prop-types";
 
-function renderImageFigure(imagesWithDimensions) {
+function renderImageFigure(imagesWithDimensions, chord) {
+    const chordName = `${chord?.rootNote?.name?.toUpperCase()}${chord?.chordType?.name}`;
     return (
         <figure>
             <picture>
                 <source srcSet={imagesWithDimensions.png.url} type="image/png" />
                 <source srcSet={imagesWithDimensions.svg.url} type="image/svg+xml" />
-                <img src={imagesWithDimensions.png.url} alt="piano" height={imagesWithDimensions.png.height} width={imagesWithDimensions.png.width} />
+                <img
+                    src={imagesWithDimensions.png.url}
+                    alt={`Piano keyboard showing the notes for a ${chordName} chord`}
+                    height={imagesWithDimensions.png.height}
+                    width={imagesWithDimensions.png.width}
+                />
             </picture>
         </figure>
     );
@@ -43,7 +48,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                         : ""}{" "}
                     {intervalsForChordType?.length === 1 ? "note" : "notes"}.
                 </p>
-                {renderImageFigure(imagesWithDimensions)}
+                {renderImageFigure(imagesWithDimensions, chord)}
                 {exactRootMatches?.length > 0 && (
                     <div>
                         <h2>Related chords with same root</h2>
@@ -111,16 +116,3 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
     );
 }
 
-ChordInfo.propTypes = {
-    chord: PropTypes.shape({
-        rootNote: PropTypes.shape({
-            name: PropTypes.string
-        }),
-        chordType: PropTypes.shape({
-            name: PropTypes.string
-        })
-    }),
-    intervalsForChordType: PropTypes.array,
-    chordMatches: PropTypes.array,
-    imagesWithDimensions: PropTypes.array
-};
