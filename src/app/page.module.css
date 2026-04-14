@@ -1,0 +1,45 @@
+.hero {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin: 0 0 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.0625rem;
+    color: var(--muted);
+    margin: 0;
+}
+
+.section {
+    margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 0 0 1rem;
+}
+
+.browseLink {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.9375rem;
+    color: var(--muted);
+    text-decoration: none;
+}
+
+.browseLink:hover {
+    color: var(--accent);
+    text-decoration: none;
+}

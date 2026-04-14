@@ -15,15 +15,19 @@ export default async function RootLayout({ children }) {
     return (
         <html lang="en">
             <body>
-                {children}
-                <footer style={{ textAlign: "center", padding: "2rem 0" }}>
-                    <small>
-                        Made by{" "}
-                        <a href="https://www.dehlimusikk.no" target="_blank" rel="noopener noreferrer">
-                            Benjamin Dehli / Dehli Musikk
-                        </a>
-                    </small>
-                </footer>
+                <div className="page-layout">
+                    <div className="container">
+                        {children}
+                    </div>
+                    <footer className="site-footer">
+                        <small>
+                            Made by{" "}
+                            <a href="https://www.dehlimusikk.no" target="_blank" rel="noopener noreferrer">
+                                Benjamin Dehli / Dehli Musikk
+                            </a>
+                        </small>
+                    </footer>
+                </div>
             </body>
         </html>
     );

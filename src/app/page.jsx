@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ChordSearch from "@/components/ChordSearch";
 import { getAllNotes, getAllChordTypes, getSlugForChord } from "@/lib/api";
+import styles from "./page.module.css";
 
 export const metadata = {
     title: "Music theory",
@@ -18,19 +19,18 @@ export default function Home() {
     );
 
     return (
-        <div>
-            <main>
-                <h1>Music theory</h1>
-                <section>
-                    <h2>Chords</h2>
-                    <ChordSearch chords={chords} />
-                    <ul>
-                        <li>
-                            <Link href="/chords">All Chords</Link>
-                        </li>
-                    </ul>
-                </section>
-            </main>
-        </div>
+        <main>
+            <header className={styles.hero}>
+                <h1 className={styles.title}>Music theory</h1>
+                <p className={styles.subtitle}>Interactive reference for chords, scales, and intervals.</p>
+            </header>
+            <section className={styles.section}>
+                <h2 className={styles.sectionTitle}>Chords</h2>
+                <ChordSearch chords={chords} />
+                <Link href="/chords" className={styles.browseLink}>
+                    Browse all chords →
+                </Link>
+            </section>
+        </main>
     );
 }
