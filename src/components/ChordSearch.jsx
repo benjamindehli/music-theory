@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import styles from "./ChordSearch.module.css";
 
 export default function ChordSearch({ chords }) {
     const [query, setQuery] = useState("");
@@ -13,20 +14,22 @@ export default function ChordSearch({ chords }) {
     }, [query, chords]);
 
     return (
-        <div>
-            <label htmlFor="chord-search">Search chords</label>
-            <br />
+        <div className={styles.search}>
+            <label htmlFor="chord-search" className={styles.label}>
+                Search chords
+            </label>
             <input
                 id="chord-search"
                 type="search"
-                placeholder="e.g. C major, minor 7th..."
+                className={styles.input}
+                placeholder="e.g. C major, minor 7th…"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 autoComplete="off"
             />
             {query.trim() && (
                 results.length > 0 ? (
-                    <ul>
+                    <ul className={styles.results}>
                         {results.map(({ label, slug }) => (
                             <li key={slug}>
                                 <Link href={`/chords/${slug}`}>{label}</Link>
@@ -34,7 +37,7 @@ export default function ChordSearch({ chords }) {
                         ))}
                     </ul>
                 ) : (
-                    <p>No chords found for &ldquo;{query.trim()}&rdquo;</p>
+                    <p className={styles.noResults}>No chords found for &ldquo;{query.trim()}&rdquo;</p>
                 )
             )}
         </div>
