@@ -1,6 +1,8 @@
 import { getAllChordTypes, getAllNotes, getImagePngUrlForChordSlug, getImageSvgUrlForChordSlug, getSlugForChord } from "@/lib/api";
 import { SITE_ORIGIN } from "@/lib/constants";
 
+export const dynamic = "force-static";
+
 function generateImageElementsForChordImageUrl(chordImage, chordImageUrl) {
     return `
         <image:image>
