@@ -33,7 +33,7 @@ export async function GET() {
             const chordSlug = getSlugForChord(note, chordType);
             const title = `${note.name}${chordType.name} chord`;
             const caption = `Piano keys with the notes for a ${title} highlighted.`;
-            const pageLoc = `${SITE_ORIGIN}/chords/${chordSlug}`;
+            const pageLoc = `${SITE_ORIGIN}/chords/${chordSlug}/`;
             const imageLocs = [
                 `${SITE_ORIGIN}${getImagePngUrlForChordSlug(chordSlug)}`,
                 `${SITE_ORIGIN}${getImageSvgUrlForChordSlug(chordSlug)}`
