@@ -1,7 +1,5 @@
 import { getAllChordTypes, getAllNotes, getSlugForChord, getSlugForNote } from "@/lib/api";
-
-const ORIGIN = "https://benjamindehli.github.io/music-theory/";
-const LAST_MODIFIED = new Date();
+import { SITE_ORIGIN } from "@/lib/constants";
 
 function generateSlashChordUrls() {
     const notes = getAllNotes();
@@ -16,9 +14,8 @@ function generateSlashChordUrls() {
                         // Skip if bass note is the same as the root note
                         return null;
                     }
-                    const rootPath = "chords/";
-                    const url = `${ORIGIN}${rootPath}${chordSlug}/${bassNoteSlug}`;
-                    return { url, lastModified: LAST_MODIFIED };
+                    const url = `${SITE_ORIGIN}/chords/${chordSlug}/${bassNoteSlug}`;
+                    return { url };
                 })
                 .filter(Boolean); // Remove null values
         });
@@ -32,9 +29,8 @@ function generateChordUrls() {
     const chordUrls = notes.flatMap((note) => {
         return chordTypes.flatMap((chordType) => {
             const chordSlug = getSlugForChord(note, chordType);
-            const rootPath = "chords/";
-            const url = `${ORIGIN}${rootPath}${chordSlug}`;
-            return { url, lastModified: LAST_MODIFIED };
+            const url = `${SITE_ORIGIN}/chords/${chordSlug}`;
+            return { url };
         });
     });
     return chordUrls;
@@ -52,14 +48,8 @@ export default async function sitemap(props) {
     switch (id) {
         case "main":
             return [
-                {
-                    url: ORIGIN,
-                    lastModified: LAST_MODIFIED
-                },
-                {
-                    url: `${ORIGIN}chords`,
-                    lastModified: LAST_MODIFIED
-                }
+                { url: `${SITE_ORIGIN}/` },
+                { url: `${SITE_ORIGIN}/chords` }
             ];
         case "chords":
             return [...chordUrls];

@@ -1,6 +1,7 @@
-# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+Sitemap: https://benjamindehli.github.io/sitemap.xml
 Sitemap: https://benjamindehli.github.io/music-theory/sitemap/main.xml
 Sitemap: https://benjamindehli.github.io/music-theory/sitemap/chords.xml
 Sitemap: https://benjamindehli.github.io/music-theory/sitemap/slash-chords.xml
-Sitemap: https://benjamindehli.github.io/music-theory/chord-images.xml
-User-agent: *

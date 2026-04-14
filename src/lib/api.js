@@ -73,6 +73,15 @@ export function getAbsoluteNoteNumber(relativeNoteNumber, rootNoteNumber) {
     return rootNoteNumber + relativeNoteNumber;
 }
 
+export function getIntervalsWithRelativeNotes(chord) {
+    const intervalsForChordType = getIntervalsForChordType(chord.chordType);
+    return intervalsForChordType.map((interval) => {
+        const relativeNoteNumber = getAbsoluteNoteNumber(interval.number, chord.rootNote.number);
+        const relativeNote = notes.find((note) => note.number === relativeNoteNumber % 12);
+        return { ...interval, relativeNote };
+    });
+}
+
 export function getChordMatches(noteNumbers) {
     return getChordsFromSelectedNotes(noteNumbers);
 }
@@ -84,4 +93,14 @@ export async function getImageDimensions(imagePath) {
     } catch (error) {
         console.error("Error reading image metadata:", error);
     }
+}
+
+export async function getImagesWithDimensions(chordSlug, bassNoteSlug) {
+    const imagePaths = { png: getImagePngUrlForChordSlug(chordSlug, bassNoteSlug), svg: getImageSvgUrlForChordSlug(chordSlug, bassNoteSlug) };
+    const imagesWithSizes = {};
+    for (const [format, path] of Object.entries(imagePaths)) {
+        const dimensions = await getImageDimensions(path);
+        imagesWithSizes[format] = { url: `/${process.env.PAGES_BASE_PATH}${path}`, ...dimensions };
+    }
+    return imagesWithSizes;
 }

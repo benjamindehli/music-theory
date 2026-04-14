@@ -1,8 +1,9 @@
 import { getChordBySlug, getNoteBySlug } from "@/lib/api";
+import { SITE_ORIGIN } from "@/lib/constants";
 import Link from "next/link";
 
 const renderBreadcrumbJsonLd = (breadcrumbs) => {
-    const originUrl = `https://benjamindehli.github.io/${process.env.PAGES_BASE_PATH}`;
+    const originUrl = SITE_ORIGIN;
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
@@ -68,7 +69,11 @@ export default async function Breadcrumbs({ params }) {
             <nav aria-label="Breadcrumb">
                 {crumbs.map((c, i) => (
                     <span key={c.href}>
-                        <Link href={c.href}>{c.label}</Link>
+                        {i < crumbs.length - 1 ? (
+                            <Link href={c.href}>{c.label}</Link>
+                        ) : (
+                            <span aria-current="page">{c.label}</span>
+                        )}
                         {i < crumbs.length - 1 && " / "}
                     </span>
                 ))}
