@@ -30,7 +30,7 @@ export default async function Chords({ params }) {
     }, {});
     return (
         <>
-            <Breadcrumbs params={params} />
+            <Breadcrumbs params={params} section="chords" />
             <main className={styles.main}>
                 <h1 className={styles.heading}>Chords</h1>
                 {Object.entries(chordTypesGroupedByNumberOfNotes)
