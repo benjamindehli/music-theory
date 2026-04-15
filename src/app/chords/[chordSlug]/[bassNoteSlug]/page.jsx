@@ -7,12 +7,14 @@ import {
     getAllNotes,
     getChordBySlug,
     getChordMatches,
+    getImagePngUrlForChordSlug,
     getImagesWithDimensions,
     getIntervalsWithRelativeNotes,
     getNoteBySlug,
     getSlugForChord,
     getSlugForNote
 } from "@/lib/api";
+import { SITE_ORIGIN } from "@/lib/constants";
 
 export const dynamicParams = false;
 
@@ -42,11 +44,40 @@ export async function generateMetadata({ params }) {
     const { chordSlug, bassNoteSlug } = await params;
     const chord = getChordBySlug(chordSlug);
     const bassNote = getNoteBySlug(bassNoteSlug);
+    if (!chord || !bassNote) return {};
+
+    const chordName = `${chord.rootNote.name}${chord.chordType.name}`;
+    const fullChordName = `${chordName}/${bassNote.name}`;
+    const intervals = getIntervalsWithRelativeNotes(chord);
+    const noteNames = intervals.map((i) => i.relativeNote.name);
+    const noteList =
+        noteNames.length <= 2
+            ? noteNames.join(" and ")
+            : noteNames.slice(0, -1).join(", ") + " and " + noteNames[noteNames.length - 1];
+
+    const title = `${fullChordName} chord`;
+    const description = `Learn how to play the ${fullChordName} chord on piano. A ${chordName} chord (${noteList}) with ${bassNote.name} as the bass note. Includes a piano keyboard diagram and related chords.`;
+    const canonicalUrl = `${SITE_ORIGIN}/chords/${chordSlug}/${bassNoteSlug}/`;
+    const imageUrl = `${SITE_ORIGIN}${getImagePngUrlForChordSlug(chordSlug, bassNoteSlug)}`;
+
     return {
-        title: chord ? `${chord.rootNote.name}${chord.chordType.name}/${bassNote.name} chord` : "",
-        description: chord
-            ? `Information about the ${chord.rootNote.name}${chord.chordType.name}/${bassNote.name} chord, including its intervals and related chords.`
-            : ""
+        title,
+        description,
+        alternates: { canonical: canonicalUrl },
+        openGraph: {
+            type: "website",
+            url: canonicalUrl,
+            siteName: "Music theory",
+            title,
+            description,
+            images: [{ url: imageUrl, alt: `${fullChordName} chord piano keyboard diagram` }]
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: [imageUrl]
+        }
     };
 }
 
@@ -78,6 +109,7 @@ export default async function Page({ params }) {
                 intervalsForChordType={intervalsForChordType}
                 chordMatches={chordMatches}
                 imagesWithDimensions={imagesWithDimensions}
+                bassNote={bassNote}
             />
         </>
     );

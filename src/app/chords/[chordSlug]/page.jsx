@@ -7,10 +7,12 @@ import {
     getAllNotes,
     getChordBySlug,
     getChordMatches,
+    getImagePngUrlForChordSlug,
     getImagesWithDimensions,
     getIntervalsWithRelativeNotes,
     getSlugForChord
 } from "@/lib/api";
+import { SITE_ORIGIN } from "@/lib/constants";
 
 export const dynamicParams = false;
 
@@ -29,11 +31,39 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
     const { chordSlug } = await params;
     const chord = getChordBySlug(chordSlug);
+    if (!chord) return {};
+
+    const chordName = `${chord.rootNote.name}${chord.chordType.name}`;
+    const intervals = getIntervalsWithRelativeNotes(chord);
+    const noteNames = intervals.map((i) => i.relativeNote.name);
+    const noteList =
+        noteNames.length <= 2
+            ? noteNames.join(" and ")
+            : noteNames.slice(0, -1).join(", ") + " and " + noteNames[noteNames.length - 1];
+
+    const title = `${chordName} chord`;
+    const description = `Learn how to play the ${chordName} chord on piano. The ${chordName} chord consists of ${noteList}. Includes a piano keyboard diagram, intervals, and related chords.`;
+    const canonicalUrl = `${SITE_ORIGIN}/chords/${chordSlug}/`;
+    const imageUrl = `${SITE_ORIGIN}${getImagePngUrlForChordSlug(chordSlug)}`;
+
     return {
-        title: chord ? `${chord.rootNote.name}${chord.chordType.name} chord` : "",
-        description: chord
-            ? `Information about the ${chord.rootNote.name}${chord.chordType.name} chord, including its intervals and related chords.`
-            : ""
+        title,
+        description,
+        alternates: { canonical: canonicalUrl },
+        openGraph: {
+            type: "website",
+            url: canonicalUrl,
+            siteName: "Music theory",
+            title,
+            description,
+            images: [{ url: imageUrl, alt: `${chordName} chord piano keyboard diagram` }]
+        },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+            images: [imageUrl]
+        }
     };
 }
 
