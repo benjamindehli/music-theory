@@ -18,21 +18,19 @@ const renderBreadcrumbJsonLd = (breadcrumbs) => {
     return JSON.stringify(jsonLd);
 };
 
-export default async function Breadcrumbs({ params }) {
+export default async function Breadcrumbs({ params, section }) {
     params = await params;
     const crumbs = [{ href: "/", label: "Music theory" }];
 
     // CHORDS
+    if (section === "chords" || params?.chordSlug) {
+        crumbs.push({ href: "/chords/", label: "Chords" });
+    }
+
     if (params?.chordSlug) {
         const chord = getChordBySlug(params.chordSlug);
-
         crumbs.push({
-            href: "/chords",
-            label: "Chords"
-        });
-
-        crumbs.push({
-            href: `/chords/${params.chordSlug}`,
+            href: `/chords/${params.chordSlug}/`,
             label: (chord ? `${chord.rootNote.name} ${chord.chordType.name}` : params.chordSlug) + " chord"
         });
     }
@@ -40,20 +38,16 @@ export default async function Breadcrumbs({ params }) {
     if (params?.bassNoteSlug) {
         const bassNote = getNoteBySlug(params.bassNoteSlug);
         crumbs.push({
-            href: `/chords/${params.chordSlug}/${params.bassNoteSlug}`,
+            href: `/chords/${params.chordSlug}/${params.bassNoteSlug}/`,
             label: `${bassNote ? bassNote.name : params.bassNoteSlug} (bass note)`
         });
     }
 
     // SCALES
     if (params?.scaleSlug) {
+        crumbs.push({ href: "/scales/", label: "Scales" });
         crumbs.push({
-            href: "/scales",
-            label: "Scales"
-        });
-
-        crumbs.push({
-            href: `/scales/${params.scaleSlug}`,
+            href: `/scales/${params.scaleSlug}/`,
             label: params.scaleSlug
         });
     }
