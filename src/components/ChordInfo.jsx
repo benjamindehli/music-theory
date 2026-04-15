@@ -20,11 +20,45 @@ function renderImageFigure(imagesWithDimensions, chord) {
     );
 }
 
+function renderHowToSection(chord, intervalsForChordType, bassNote) {
+    const chordName = `${chord.rootNote.name}${chord.chordType.name}`;
+    const fullChordName = bassNote ? `${chordName}/${bassNote.name}` : chordName;
+    const nonRootIntervals = intervalsForChordType.filter((i) => i.number > 0);
+    const noteCount = intervalsForChordType.length + (bassNote ? 1 : 0);
+
+    return (
+        <section className={styles.howToSection}>
+            <h2 className={styles.howToTitle}>How to play the {fullChordName} chord</h2>
+            <ol className={styles.howToSteps}>
+                {bassNote && (
+                    <li>
+                        Play <strong>{bassNote.name}</strong> as the lowest bass note in the left hand
+                    </li>
+                )}
+                <li>
+                    Find <strong>{chord.rootNote.name}</strong> (Root) on the piano keyboard
+                </li>
+                {nonRootIntervals.map((interval) => (
+                    <li key={interval.number}>
+                        Add <strong>{interval.relativeNote.name}</strong> ({interval.fullName}) &mdash;{" "}
+                        {interval.number} {interval.number === 1 ? "semitone" : "semitones"} above {chord.rootNote.name}
+                    </li>
+                ))}
+                <li>
+                    {noteCount === 1
+                        ? `Press the note to sound the ${fullChordName} chord`
+                        : `Press all ${noteCount} notes simultaneously to sound the ${fullChordName} chord`}
+                </li>
+            </ol>
+        </section>
+    );
+}
+
 function filterChordMatchesByType(chordMatches, type) {
     return chordMatches.filter((match) => match.matchType === type).map((match) => match.chord);
 }
 
-export default async function ChordInfo({ chord, intervalsForChordType, imagesWithDimensions, chordMatches }) {
+export default async function ChordInfo({ chord, intervalsForChordType, imagesWithDimensions, chordMatches, bassNote }) {
     const exactRootMatches = filterChordMatchesByType(chordMatches, "exactRoot");
     const invertedRootMatches = filterChordMatchesByType(chordMatches, "invertedRoot");
     const nonRootMatches = filterChordMatchesByType(chordMatches, "nonRoot");
@@ -51,6 +85,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
             <div className={styles.diagram}>
                 {renderImageFigure(imagesWithDimensions, chord)}
             </div>
+            {chord && intervalsForChordType && renderHowToSection(chord, intervalsForChordType, bassNote)}
             {exactRootMatches?.length > 0 && (
                 <section className={styles.relatedSection}>
                     <h2 className={styles.relatedTitle}>Related chords with same root</h2>
