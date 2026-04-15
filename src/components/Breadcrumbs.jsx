@@ -33,7 +33,7 @@ export default async function Breadcrumbs({ params }) {
 
         crumbs.push({
             href: `/chords/${params.chordSlug}`,
-            label: (chord ? `${chord.rootNote.name}${chord.chordType.name}` : params.chordSlug) + " chord"
+            label: (chord ? `${chord.rootNote.name} ${chord.chordType.name}` : params.chordSlug) + " chord"
         });
     }
 

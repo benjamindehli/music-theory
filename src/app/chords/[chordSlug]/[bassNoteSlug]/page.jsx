@@ -46,7 +46,7 @@ export async function generateMetadata({ params }) {
     const bassNote = getNoteBySlug(bassNoteSlug);
     if (!chord || !bassNote) return {};
 
-    const chordName = `${chord.rootNote.name}${chord.chordType.name}`;
+    const chordName = `${chord.rootNote.name} ${chord.chordType.name}`;
     const fullChordName = `${chordName}/${bassNote.name}`;
     const intervals = getIntervalsWithRelativeNotes(chord);
     const noteNames = intervals.map((i) => i.relativeNote.name);

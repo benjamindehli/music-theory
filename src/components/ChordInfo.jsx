@@ -21,7 +21,7 @@ function renderImageFigure(imagesWithDimensions, chord) {
 }
 
 function renderHowToSection(chord, intervalsForChordType, bassNote) {
-    const chordName = `${chord.rootNote.name}${chord.chordType.name}`;
+    const chordName = `${chord.rootNote.name} ${chord.chordType.name}`;
     const fullChordName = bassNote ? `${chordName}/${bassNote.name}` : chordName;
     const nonRootIntervals = intervalsForChordType.filter((i) => i.number > 0);
     const noteCount = intervalsForChordType.length + (bassNote ? 1 : 0);
@@ -40,8 +40,8 @@ function renderHowToSection(chord, intervalsForChordType, bassNote) {
                 </li>
                 {nonRootIntervals.map((interval) => (
                     <li key={interval.number}>
-                        Add <strong>{interval.relativeNote.name}</strong> ({interval.fullName}) &mdash;{" "}
-                        {interval.number} {interval.number === 1 ? "semitone" : "semitones"} above {chord.rootNote.name}
+                        Add <strong>{interval.relativeNote.name}</strong> ({interval.fullName}) &mdash; {interval.number}{" "}
+                        {interval.number === 1 ? "semitone" : "semitones"} above {chord.rootNote.name}
                     </li>
                 ))}
                 <li>
@@ -66,12 +66,10 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
     return (
         <main className={styles.main}>
             <h1 className={styles.title}>
-                {chord?.rootNote?.name?.toUpperCase()}
-                {chord?.chordType?.name}
+                {chord?.rootNote?.name?.toUpperCase()} {chord?.chordType?.name}
             </h1>
             <p className={styles.description}>
-                The {chord?.rootNote?.name?.toUpperCase()}
-                {chord?.chordType?.name} chord consists of the{" "}
+                The {chord?.rootNote?.name?.toUpperCase()} {chord?.chordType?.name} chord consists of the{" "}
                 {intervalsForChordType?.length
                     ? (() => {
                           const items = intervalsForChordType.map((interval) => `${interval.relativeNote?.name} (${interval.fullName})`);
@@ -82,9 +80,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                     : ""}{" "}
                 {intervalsForChordType?.length === 1 ? "note" : "notes"}.
             </p>
-            <div className={styles.diagram}>
-                {renderImageFigure(imagesWithDimensions, chord)}
-            </div>
+            <div className={styles.diagram}>{renderImageFigure(imagesWithDimensions, chord)}</div>
             {chord && intervalsForChordType && renderHowToSection(chord, intervalsForChordType, bassNote)}
             {exactRootMatches?.length > 0 && (
                 <section className={styles.relatedSection}>
@@ -93,8 +89,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                         {exactRootMatches.map((match) => (
                             <li key={`${match.rootNote.name}-${match.chordType.name}-same-root-${match.chordType.name}`}>
                                 <Link href={`/chords/${getSlugForChord(match.rootNote, match.chordType)}`}>
-                                    {match.rootNote.name}
-                                    {match.chordType.name}
+                                    {match.rootNote.name} {match.chordType.name}
                                 </Link>
                             </li>
                         ))}
@@ -108,8 +103,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                         {invertedRootMatches.map((match) => (
                             <li key={`${match.rootNote.name}-${match.chordType.name}-inverted-root-${match.chordType.name}`}>
                                 <Link href={`/chords/${getSlugForChord(match.rootNote, match.chordType)}`}>
-                                    {match.rootNote.name}
-                                    {match.chordType.name}
+                                    {match.rootNote.name} {match.chordType.name}
                                 </Link>
                             </li>
                         ))}
@@ -121,12 +115,9 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                     <h2 className={styles.relatedTitle}>Related chords with different root</h2>
                     <ul className={styles.chordList}>
                         {nonRootMatches.map((match) => (
-                            <li
-                                key={`${match.rootNote.name}-${match.chordType.name}-different-root-${match.rootNote.name}-${match.chordType.name}`}
-                            >
+                            <li key={`${match.rootNote.name}-${match.chordType.name}-different-root-${match.rootNote.name}-${match.chordType.name}`}>
                                 <Link href={`/chords/${getSlugForChord(match.rootNote, match.chordType)}`}>
-                                    {match.rootNote.name}
-                                    {match.chordType.name}
+                                    {match.rootNote.name} {match.chordType.name}
                                 </Link>
                             </li>
                         ))}
@@ -140,8 +131,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                         {slashChordMatches.map((match) => (
                             <li key={`${match.rootNote.name}-${match.chordType.name}-slash-${match.bassNote.name}`}>
                                 <Link href={`/chords/${getSlugForChord(match.rootNote, match.chordType)}/${getSlugForNote(match.bassNote)}`}>
-                                    {match.rootNote.name}
-                                    {match.chordType.name}/{match.bassNote.name}
+                                    {match.rootNote.name} {match.chordType.name}/{match.bassNote.name}
                                 </Link>
                             </li>
                         ))}

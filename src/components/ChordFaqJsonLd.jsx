@@ -5,7 +5,7 @@ function formatList(items) {
 }
 
 export default function ChordFaqJsonLd({ chord, intervalsForChordType, bassNote }) {
-    const chordName = `${chord.rootNote.name}${chord.chordType.name}`;
+    const chordName = `${chord.rootNote.name} ${chord.chordType.name}`;
     const fullChordName = bassNote ? `${chordName}/${bassNote.name}` : chordName;
 
     const noteWithIntervalItems = intervalsForChordType.map(
