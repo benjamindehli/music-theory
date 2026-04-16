@@ -6,9 +6,10 @@ export const metadata = {
         template: "%s | Music theory",
         default: "Music theory"
     },
-    description: {
-        template: "%s",
-        default: "A web app for exploring music theory concepts, including chords, scales, and intervals."
+    description: "A web app for exploring music theory concepts, including chords, scales, and intervals.",
+    openGraph: {
+        siteName: "Music theory",
+        locale: "en_US"
     }
 };
 
