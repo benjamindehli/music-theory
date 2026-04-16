@@ -3,6 +3,11 @@ import { getAllNotes, getAllChordTypes, getSlugForChord } from "@/lib/api";
 import Link from "next/link";
 import styles from "./page.module.css";
 
+export const metadata = {
+    title: "Browse all chords",
+    description: "Browse the complete chord library — all chord types for every root note, organized by triads, tetrads, and beyond."
+};
+
 export default async function Chords({ params }) {
     const notes = getAllNotes();
     const chordTypes = getAllChordTypes();
