@@ -4,7 +4,7 @@ import { getAllNotes, getAllChordTypes, getSlugForChord } from "@/lib/api";
 import styles from "./page.module.css";
 
 export const metadata = {
-    title: "Music theory",
+    title: { absolute: "Music theory" },
     description: "Interactive music theory reference covering chords, intervals, and piano keyboard diagrams."
 };
 
