@@ -30,7 +30,7 @@ async function generateSvgForChord(rootNote, chordType, bassNote) {
 
     // Save PNG
     const sharpOptions = {
-        //density: 100 // higher density for better quality 100
+        density: 100
     };
     const exifData = {
         IFD0: {
