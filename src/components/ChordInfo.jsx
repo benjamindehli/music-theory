@@ -2,8 +2,9 @@ import { getSlugForChord, getSlugForNote } from "@/lib/api";
 import Link from "next/link";
 import styles from "./ChordInfo.module.css";
 
-function renderImageFigure(imagesWithDimensions, chord) {
-    const chordName = `${chord?.rootNote?.name?.toUpperCase()}${chord?.chordType?.name}`;
+function renderImageFigure(imagesWithDimensions, chord, bassNote) {
+    const chordName = `${chord?.rootNote?.name} ${chord?.chordType?.name}`;
+    const fullChordName = bassNote ? `${chordName}/${bassNote.name}` : chordName;
     return (
         <figure>
             <picture>
@@ -11,7 +12,7 @@ function renderImageFigure(imagesWithDimensions, chord) {
                 <source srcSet={imagesWithDimensions.png.url} type="image/png" />
                 <img
                     src={imagesWithDimensions.png.url}
-                    alt={`Piano keyboard showing the notes for a ${chordName} chord`}
+                    alt={`Piano keyboard showing the notes for a ${fullChordName} chord`}
                     height={imagesWithDimensions.png.height}
                     width={imagesWithDimensions.png.width}
                 />
@@ -80,7 +81,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                     : ""}{" "}
                 {intervalsForChordType?.length === 1 ? "note" : "notes"}.
             </p>
-            <div className={styles.diagram}>{renderImageFigure(imagesWithDimensions, chord)}</div>
+            <div className={styles.diagram}>{renderImageFigure(imagesWithDimensions, chord, bassNote)}</div>
             {chord && intervalsForChordType && renderHowToSection(chord, intervalsForChordType, bassNote)}
             {exactRootMatches?.length > 0 && (
                 <section className={styles.relatedSection}>
