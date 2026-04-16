@@ -244,7 +244,7 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
         const legendSpacing = 8;
         const legendFontSize = fontSize;
         const legendX = 12;
-        const legendYStart = svgHeight + 32;
+        const legendYStart = svgHeight + 16;
         // Escape XML special characters in text
         function escapeXml(str) {
             return String(str).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
