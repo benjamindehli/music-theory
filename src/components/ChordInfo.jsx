@@ -7,8 +7,8 @@ function renderImageFigure(imagesWithDimensions, chord) {
     return (
         <figure>
             <picture>
-                <source srcSet={imagesWithDimensions.png.url} type="image/png" />
                 <source srcSet={imagesWithDimensions.svg.url} type="image/svg+xml" />
+                <source srcSet={imagesWithDimensions.png.url} type="image/png" />
                 <img
                     src={imagesWithDimensions.png.url}
                     alt={`Piano keyboard showing the notes for a ${chordName} chord`}
