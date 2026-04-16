@@ -81,8 +81,9 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
         blackKeyWidth = 24,
         blackKeyHeight = 110,
         activeColor = "#6ea5ea",
-        whiteColor = "#f5f2eb",
-        blackColor = "#1b1b19",
+        whiteColor = "#fdfcf9",
+        blackColor = "#1b1a19",
+        strokeColor = "#121110",
         showLabels = true,
         showBlackKeyLabels = true,
         fontSize = 12,
@@ -149,7 +150,7 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
         <rect x="${currentX}" y="0"
               width="${whiteKeyWidth}" height="${whiteKeyHeight}"
               fill="${isBass ? bassNoteColor : notBassNoteColor}"
-              stroke="#000"/>
+              stroke="${strokeColor}"/>
       `;
 
             // Labels (white keys)
@@ -198,7 +199,7 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
         <rect x="${x + blackKeyWidth / 2}" y="0"
               width="${blackKeyWidth}" height="${blackKeyHeight}"
               fill="${isBass ? bassNoteColor : notBassNoteColor}"
-              stroke="#000"/>
+              stroke="${strokeColor}"/>
       `;
 
             // Labels (black keys optional)
@@ -267,7 +268,7 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
         legendItems.forEach((item, i) => {
             const y = legendYStart + i * (legendBoxHeight + legendSpacing);
             legendSvg += `
-    <rect x="${legendX}" y="${y}" width="${legendBoxWidth}" height="${legendBoxHeight}" fill="${item.color}" stroke="#000" rx="6"/>
+    <rect x="${legendX}" y="${y}" width="${legendBoxWidth}" height="${legendBoxHeight}" fill="${item.color}" stroke="${strokeColor}" rx="6"/>
     `;
             legendSvg += `<text x="${legendX + legendBoxWidth + 10}" y="${y + legendBoxHeight / 2 + legendFontSize / 2.5}" font-size="${legendFontSize}" font-family="${fontFamily}" text-anchor="start" fill="#000">${item.label}</text>
     `;
