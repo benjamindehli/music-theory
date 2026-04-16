@@ -1,5 +1,6 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ChordFaqJsonLd from "@/components/ChordFaqJsonLd";
+import ChordHowToJsonLd from "@/components/ChordHowToJsonLd";
 import ChordInfo from "@/components/ChordInfo";
 import {
     getAbsoluteNoteNumber,
@@ -81,7 +82,10 @@ export default async function Page({ params }) {
         <>
             <Breadcrumbs params={params} />
             {chord && intervalsForChordType && (
-                <ChordFaqJsonLd chord={chord} intervalsForChordType={intervalsForChordType} />
+                <>
+                    <ChordFaqJsonLd chord={chord} intervalsForChordType={intervalsForChordType} />
+                    <ChordHowToJsonLd chord={chord} intervalsForChordType={intervalsForChordType} />
+                </>
             )}
             <ChordInfo
                 chord={chord}
