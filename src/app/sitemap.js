@@ -15,7 +15,7 @@ function generateSlashChordUrls() {
                         return null;
                     }
                     const url = `${SITE_ORIGIN}/chords/${chordSlug}/${bassNoteSlug}/`;
-                    return { url };
+                    return { url, changeFrequency: "yearly", priority: 0.5 };
                 })
                 .filter(Boolean); // Remove null values
         });
@@ -30,7 +30,7 @@ function generateChordUrls() {
         return chordTypes.flatMap((chordType) => {
             const chordSlug = getSlugForChord(note, chordType);
             const url = `${SITE_ORIGIN}/chords/${chordSlug}/`;
-            return { url };
+            return { url, changeFrequency: "yearly", priority: 0.7 };
         });
     });
     return chordUrls;
@@ -48,8 +48,8 @@ export default async function sitemap(props) {
     switch (id) {
         case "main":
             return [
-                { url: `${SITE_ORIGIN}/` },
-                { url: `${SITE_ORIGIN}/chords/` }
+                { url: `${SITE_ORIGIN}/`, changeFrequency: "monthly", priority: 1 },
+                { url: `${SITE_ORIGIN}/chords/`, changeFrequency: "monthly", priority: 0.9 }
             ];
         case "chords":
             return [...chordUrls];
