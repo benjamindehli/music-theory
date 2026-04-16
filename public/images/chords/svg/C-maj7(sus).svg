@@ -2,7 +2,7 @@
         <rect x="0" y="0"
               width="40" height="180"
               fill="#dc2626"
-              stroke="#000"/>
+              stroke="#121110"/>
       
           <text x="20"
                 y="170"
@@ -15,8 +15,8 @@
         
         <rect x="40" y="0"
               width="40" height="180"
-              fill="#f5f2eb"
-              stroke="#000"/>
+              fill="#fdfcf9"
+              stroke="#121110"/>
       
           <text x="60"
                 y="170"
@@ -29,8 +29,8 @@
         
         <rect x="80" y="0"
               width="40" height="180"
-              fill="#f5f2eb"
-              stroke="#000"/>
+              fill="#fdfcf9"
+              stroke="#121110"/>
       
           <text x="100"
                 y="170"
@@ -43,8 +43,8 @@
         
         <rect x="120" y="0"
               width="40" height="180"
-              fill="#f5f2eb"
-              stroke="#000"/>
+              fill="#fdfcf9"
+              stroke="#121110"/>
       
           <text x="140"
                 y="170"
@@ -58,7 +58,7 @@
         <rect x="160" y="0"
               width="40" height="180"
               fill="#c026d3"
-              stroke="#000"/>
+              stroke="#121110"/>
       
           <text x="180"
                 y="170"
@@ -71,8 +71,8 @@
         
         <rect x="200" y="0"
               width="40" height="180"
-              fill="#f5f2eb"
-              stroke="#000"/>
+              fill="#fdfcf9"
+              stroke="#121110"/>
       
           <text x="220"
                 y="170"
@@ -86,7 +86,7 @@
         <rect x="240" y="0"
               width="40" height="180"
               fill="#16a34a"
-              stroke="#000"/>
+              stroke="#121110"/>
       
           <text x="260"
                 y="170"
@@ -99,8 +99,8 @@
         
         <rect x="28" y="0"
               width="24" height="110"
-              fill="#1b1b19"
-              stroke="#000"/>
+              fill="#1b1a19"
+              stroke="#121110"/>
       
           <text x="40"
                 y="100"
@@ -113,8 +113,8 @@
         
         <rect x="68" y="0"
               width="24" height="110"
-              fill="#1b1b19"
-              stroke="#000"/>
+              fill="#1b1a19"
+              stroke="#121110"/>
       
           <text x="80"
                 y="100"
@@ -127,8 +127,8 @@
         
         <rect x="148" y="0"
               width="24" height="110"
-              fill="#1b1b19"
-              stroke="#000"/>
+              fill="#1b1a19"
+              stroke="#121110"/>
       
           <text x="160"
                 y="100"
@@ -141,8 +141,8 @@
         
         <rect x="188" y="0"
               width="24" height="110"
-              fill="#1b1b19"
-              stroke="#000"/>
+              fill="#1b1a19"
+              stroke="#121110"/>
       
           <text x="200"
                 y="100"
@@ -155,8 +155,8 @@
         
         <rect x="228" y="0"
               width="24" height="110"
-              fill="#1b1b19"
-              stroke="#000"/>
+              fill="#1b1a19"
+              stroke="#121110"/>
       
           <text x="240"
                 y="100"
@@ -177,12 +177,12 @@
         dehlimusikk.no
       </text>
     
-    <rect x="12" y="212" width="24" height="24" fill="#dc2626" stroke="#000" rx="6"/>
-    <text x="46" y="228.8" font-size="12" font-family="Arial, sans-serif" text-anchor="start" fill="#000">Perfect unison</text>
+    <rect x="12" y="196" width="24" height="24" fill="#dc2626" stroke="#121110" rx="6"/>
+    <text x="46" y="212.8" font-size="12" font-family="Arial, sans-serif" text-anchor="start" fill="#000">Perfect unison</text>
     
-    <rect x="12" y="244" width="24" height="24" fill="#c026d3" stroke="#000" rx="6"/>
-    <text x="46" y="260.8" font-size="12" font-family="Arial, sans-serif" text-anchor="start" fill="#000">Perfect fifth</text>
+    <rect x="12" y="228" width="24" height="24" fill="#c026d3" stroke="#121110" rx="6"/>
+    <text x="46" y="244.8" font-size="12" font-family="Arial, sans-serif" text-anchor="start" fill="#000">Perfect fifth</text>
     
-    <rect x="12" y="276" width="24" height="24" fill="#16a34a" stroke="#000" rx="6"/>
-    <text x="46" y="292.8" font-size="12" font-family="Arial, sans-serif" text-anchor="start" fill="#000">Major seventh</text>
+    <rect x="12" y="260" width="24" height="24" fill="#16a34a" stroke="#121110" rx="6"/>
+    <text x="46" y="276.8" font-size="12" font-family="Arial, sans-serif" text-anchor="start" fill="#000">Major seventh</text>
     </svg>
