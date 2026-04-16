@@ -8,6 +8,7 @@ import {
     getAllNotes,
     getChordBySlug,
     getChordMatches,
+    getImageDimensions,
     getImagePngUrlForChordSlug,
     getImagesWithDimensions,
     getIntervalsWithRelativeNotes,
@@ -59,7 +60,9 @@ export async function generateMetadata({ params }) {
     const title = `${fullChordName} chord`;
     const description = `Learn how to play the ${fullChordName} chord on piano. A ${chordName} chord (${noteList}) with ${bassNote.name} as the bass note. Includes a piano keyboard diagram and related chords.`;
     const canonicalUrl = `${SITE_ORIGIN}/chords/${chordSlug}/${bassNoteSlug}/`;
-    const imageUrl = `${SITE_ORIGIN}${getImagePngUrlForChordSlug(chordSlug, bassNoteSlug)}`;
+    const imagePath = getImagePngUrlForChordSlug(chordSlug, bassNoteSlug);
+    const imageUrl = `${SITE_ORIGIN}${imagePath}`;
+    const imageDimensions = await getImageDimensions(imagePath);
 
     return {
         title,
@@ -69,9 +72,10 @@ export async function generateMetadata({ params }) {
             type: "website",
             url: canonicalUrl,
             siteName: "Music theory",
+            locale: "en_US",
             title,
             description,
-            images: [{ url: imageUrl, alt: `${fullChordName} chord piano keyboard diagram` }]
+            images: [{ url: imageUrl, alt: `${fullChordName} chord piano keyboard diagram`, ...imageDimensions }]
         },
         twitter: {
             card: "summary_large_image",

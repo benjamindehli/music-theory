@@ -8,6 +8,7 @@ import {
     getAllNotes,
     getChordBySlug,
     getChordMatches,
+    getImageDimensions,
     getImagePngUrlForChordSlug,
     getImagesWithDimensions,
     getIntervalsWithRelativeNotes,
@@ -45,7 +46,9 @@ export async function generateMetadata({ params }) {
     const title = `${chordName} chord`;
     const description = `Learn how to play the ${chordName} chord on piano. The ${chordName} chord consists of ${noteList}. Includes a piano keyboard diagram, intervals, and related chords.`;
     const canonicalUrl = `${SITE_ORIGIN}/chords/${chordSlug}/`;
-    const imageUrl = `${SITE_ORIGIN}${getImagePngUrlForChordSlug(chordSlug)}`;
+    const imagePath = getImagePngUrlForChordSlug(chordSlug);
+    const imageUrl = `${SITE_ORIGIN}${imagePath}`;
+    const imageDimensions = await getImageDimensions(imagePath);
 
     return {
         title,
@@ -55,9 +58,10 @@ export async function generateMetadata({ params }) {
             type: "website",
             url: canonicalUrl,
             siteName: "Music theory",
+            locale: "en_US",
             title,
             description,
-            images: [{ url: imageUrl, alt: `${chordName} chord piano keyboard diagram` }]
+            images: [{ url: imageUrl, alt: `${chordName} chord piano keyboard diagram`, ...imageDimensions }]
         },
         twitter: {
             card: "summary_large_image",
