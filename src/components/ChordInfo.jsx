@@ -64,13 +64,15 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
     const invertedRootMatches = filterChordMatchesByType(chordMatches, "invertedRoot");
     const nonRootMatches = filterChordMatchesByType(chordMatches, "nonRoot");
     const slashChordMatches = filterChordMatchesByType(chordMatches, "slashChord");
+    const chordName = `${chord?.rootNote?.name} ${chord?.chordType?.name}`;
     return (
         <main className={styles.main}>
             <h1 className={styles.title}>
                 {chord?.rootNote?.name?.toUpperCase()} {chord?.chordType?.name}
+                {bassNote ? `/${bassNote.name}` : ""}
             </h1>
             <p className={styles.description}>
-                The {chord?.rootNote?.name?.toUpperCase()} {chord?.chordType?.name} chord consists of the{" "}
+                The {chordName} chord consists of the{" "}
                 {intervalsForChordType?.length
                     ? (() => {
                           const items = intervalsForChordType.map((interval) => `${interval.relativeNote?.name} (${interval.fullName})`);
@@ -79,7 +81,8 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                           return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
                       })()
                     : ""}{" "}
-                {intervalsForChordType?.length === 1 ? "note" : "notes"}.
+                {intervalsForChordType?.length === 1 ? "note" : "notes"}
+                {bassNote ? `, with ${bassNote.name} as the bass note` : ""}.
             </p>
             <div className={styles.diagram}>{renderImageFigure(imagesWithDimensions, chord, bassNote)}</div>
             {chord && intervalsForChordType && renderHowToSection(chord, intervalsForChordType, bassNote)}
