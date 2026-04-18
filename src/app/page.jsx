@@ -1,20 +1,29 @@
 import Link from "next/link";
-import ChordSearch from "@/components/ChordSearch";
-import { getAllNotes, getAllChordTypes, getAllScaleTypes, getSlugForChord } from "@/lib/api";
+import MusicSearch from "@/components/MusicSearch";
+import { getAllNotes, getAllChordTypes, getAllScaleTypes, getSlugForChord, getSlugForScale } from "@/lib/api";
 import styles from "./page.module.css";
 
 export const metadata = {
     title: { absolute: "Music theory" },
-    description: "Interactive music theory reference covering chords, intervals, and piano keyboard diagrams."
+    description: "Interactive music theory reference covering chords, scales, intervals, and piano keyboard diagrams."
 };
 
 export default function Home() {
     const notes = getAllNotes();
     const chordTypes = getAllChordTypes();
+    const scaleTypes = getAllScaleTypes();
+
     const chords = notes.flatMap((note) =>
         chordTypes.map((chordType) => ({
             label: `${note.name} ${chordType.name}`,
             slug: getSlugForChord(note, chordType)
+        }))
+    );
+
+    const scales = notes.flatMap((note) =>
+        scaleTypes.map((scaleType) => ({
+            label: `${note.name} ${scaleType.name}`,
+            slug: getSlugForScale(note, scaleType)
         }))
     );
 
@@ -25,17 +34,15 @@ export default function Home() {
                 <p className={styles.subtitle}>Interactive reference for chords, scales, and intervals.</p>
             </header>
             <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Chords</h2>
-                <ChordSearch chords={chords} />
-                <Link href="/chords" className={styles.browseLink}>
-                    Browse all chords →
-                </Link>
-            </section>
-            <section className={styles.section}>
-                <h2 className={styles.sectionTitle}>Scales</h2>
-                <Link href="/scales" className={styles.browseLink}>
-                    Browse all scales →
-                </Link>
+                <MusicSearch chords={chords} scales={scales} />
+                <div className={styles.browseLinks}>
+                    <Link href="/chords" className={styles.browseLink}>
+                        Browse all chords →
+                    </Link>
+                    <Link href="/scales" className={styles.browseLink}>
+                        Browse all scales →
+                    </Link>
+                </div>
             </section>
         </main>
     );

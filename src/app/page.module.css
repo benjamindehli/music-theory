@@ -31,9 +31,14 @@
     margin: 0 0 1rem;
 }
 
-.browseLink {
-    display: inline-block;
+.browseLinks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
     margin-top: 1rem;
+}
+
+.browseLink {
     font-size: 0.9375rem;
     color: var(--muted);
     text-decoration: none;
