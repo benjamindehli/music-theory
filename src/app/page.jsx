@@ -1,6 +1,6 @@
 import Link from "next/link";
 import ChordSearch from "@/components/ChordSearch";
-import { getAllNotes, getAllChordTypes, getSlugForChord } from "@/lib/api";
+import { getAllNotes, getAllChordTypes, getAllScaleTypes, getSlugForChord } from "@/lib/api";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -29,6 +29,12 @@ export default function Home() {
                 <ChordSearch chords={chords} />
                 <Link href="/chords" className={styles.browseLink}>
                     Browse all chords →
+                </Link>
+            </section>
+            <section className={styles.section}>
+                <h2 className={styles.sectionTitle}>Scales</h2>
+                <Link href="/scales" className={styles.browseLink}>
+                    Browse all scales →
                 </Link>
             </section>
         </main>
