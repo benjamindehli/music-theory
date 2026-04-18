@@ -89,6 +89,7 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
         fontSize = 12,
         fontFamily = "Arial, sans-serif"
     } = options;
+    const noteSelectionTypeProperty = options.chordType ? "chordType" : options.scaleType ? "scaleType" : null;
 
     // Normalize input → MIDI numbers
     const midiNotesRaw = activeNotes.map((n) => (typeof n === "number" ? n : noteToMidi(n))).filter((n) => n !== null);
@@ -102,7 +103,7 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
         // Remove all occurrences of the bass note from chordNotes for shifting
         chordNotesRaw = midiNotesRaw.filter((n) => n !== bassNoteMidi);
     }
-    // The notes to render: always include bass at original, and all other chord notes an octave higher
+    // The notes to render: always include bass at original, and all other chord / scale notes an octave higher
     let renderMidiNotes = [];
     if (bassNoteMidi === null) {
         renderMidiNotes = midiNotesRaw;
@@ -234,9 +235,9 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
     // If intervals array is provided in options, render a legend
     let legendSvg = "";
     let legendHeight = 0;
-    if (options.intervals && Array.isArray(options.intervals) && Array.isArray(options.chordType?.halfSteps)) {
+    if (options.intervals && Array.isArray(options.intervals) && Array.isArray(options?.[noteSelectionTypeProperty]?.halfSteps)) {
         // Only show intervals used in the chord, no duplicates
-        const usedIntervalNumbers = Array.from(new Set(options.chordType.halfSteps.map((h) => h % 12)));
+        const usedIntervalNumbers = Array.from(new Set(options?.[noteSelectionTypeProperty]?.halfSteps.map((h) => h % 12)));
         const usedIntervals = usedIntervalNumbers.map((num) => options.intervals.find((ivl) => ivl.number % 12 === num)).filter(Boolean);
         // Legend layout (vertical)
         const legendBoxWidth = 24;
