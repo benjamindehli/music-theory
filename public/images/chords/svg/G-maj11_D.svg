@@ -1,4 +1,4 @@
-<svg width="1120" height="428" xmlns="http://www.w3.org/2000/svg">
+<svg width="880" height="428" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0"
               width="40" height="180"
               fill="#fdfcf9"
@@ -307,90 +307,6 @@
             C
           </text>
         
-        <rect x="880" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="900"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            D
-          </text>
-        
-        <rect x="920" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="940"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            E
-          </text>
-        
-        <rect x="960" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="980"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            F
-          </text>
-        
-        <rect x="1000" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="1020"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            G
-          </text>
-        
-        <rect x="1040" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="1060"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            A
-          </text>
-        
-        <rect x="1080" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="1100"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            B
-          </text>
-        
         <rect x="28" y="0"
               width="24" height="110"
               fill="#1b1a19"
@@ -601,77 +517,7 @@
             A#
           </text>
         
-        <rect x="868" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="880"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            C#
-          </text>
-        
-        <rect x="908" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="920"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            D#
-          </text>
-        
-        <rect x="988" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="1000"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            F#
-          </text>
-        
-        <rect x="1028" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="1040"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            G#
-          </text>
-        
-        <rect x="1068" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="1080"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            A#
-          </text>
-        
-      <text x="560" y="150"
+      <text x="440" y="150"
             font-size="33"
             font-family="Arial, sans-serif"
             font-weight="bold"

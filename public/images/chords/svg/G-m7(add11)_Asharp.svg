@@ -1,4 +1,4 @@
-<svg width="1120" height="396" xmlns="http://www.w3.org/2000/svg">
+<svg width="760" height="396" xmlns="http://www.w3.org/2000/svg">
         <rect x="0" y="0"
               width="40" height="180"
               fill="#fdfcf9"
@@ -10,7 +10,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            C
+            F
           </text>
         
         <rect x="40" y="0"
@@ -24,7 +24,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            D
+            G
           </text>
         
         <rect x="80" y="0"
@@ -38,7 +38,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            E
+            A
           </text>
         
         <rect x="120" y="0"
@@ -52,7 +52,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            F
+            B
           </text>
         
         <rect x="160" y="0"
@@ -66,7 +66,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            G
+            C
           </text>
         
         <rect x="200" y="0"
@@ -80,7 +80,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            A
+            D
           </text>
         
         <rect x="240" y="0"
@@ -94,7 +94,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            B
+            E
           </text>
         
         <rect x="280" y="0"
@@ -108,12 +108,12 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            C
+            F
           </text>
         
         <rect x="320" y="0"
               width="40" height="180"
-              fill="#fdfcf9"
+              fill="#dc2626"
               stroke="#121110"/>
       
           <text x="340"
@@ -122,7 +122,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            D
+            G
           </text>
         
         <rect x="360" y="0"
@@ -136,7 +136,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            E
+            A
           </text>
         
         <rect x="400" y="0"
@@ -150,12 +150,12 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            F
+            B
           </text>
         
         <rect x="440" y="0"
               width="40" height="180"
-              fill="#dc2626"
+              fill="#fdfcf9"
               stroke="#121110"/>
       
           <text x="460"
@@ -164,12 +164,12 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            G
+            C
           </text>
         
         <rect x="480" y="0"
               width="40" height="180"
-              fill="#fdfcf9"
+              fill="#c026d3"
               stroke="#121110"/>
       
           <text x="500"
@@ -178,7 +178,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            A
+            D
           </text>
         
         <rect x="520" y="0"
@@ -192,12 +192,12 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            B
+            E
           </text>
         
         <rect x="560" y="0"
               width="40" height="180"
-              fill="#fdfcf9"
+              fill="#ca8a04"
               stroke="#121110"/>
       
           <text x="580"
@@ -206,12 +206,12 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            C
+            F
           </text>
         
         <rect x="600" y="0"
               width="40" height="180"
-              fill="#c026d3"
+              fill="#fdfcf9"
               stroke="#121110"/>
       
           <text x="620"
@@ -220,7 +220,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            D
+            G
           </text>
         
         <rect x="640" y="0"
@@ -234,12 +234,12 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            E
+            A
           </text>
         
         <rect x="680" y="0"
               width="40" height="180"
-              fill="#ca8a04"
+              fill="#fdfcf9"
               stroke="#121110"/>
       
           <text x="700"
@@ -248,12 +248,12 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            F
+            B
           </text>
         
         <rect x="720" y="0"
               width="40" height="180"
-              fill="#fdfcf9"
+              fill="#2563eb"
               stroke="#121110"/>
       
           <text x="740"
@@ -262,133 +262,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            G
-          </text>
-        
-        <rect x="760" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="780"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            A
-          </text>
-        
-        <rect x="800" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="820"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            B
-          </text>
-        
-        <rect x="840" y="0"
-              width="40" height="180"
-              fill="#2563eb"
-              stroke="#121110"/>
-      
-          <text x="860"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
             C
-          </text>
-        
-        <rect x="880" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="900"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            D
-          </text>
-        
-        <rect x="920" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="940"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            E
-          </text>
-        
-        <rect x="960" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="980"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            F
-          </text>
-        
-        <rect x="1000" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="1020"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            G
-          </text>
-        
-        <rect x="1040" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="1060"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            A
-          </text>
-        
-        <rect x="1080" y="0"
-              width="40" height="180"
-              fill="#fdfcf9"
-              stroke="#121110"/>
-      
-          <text x="1100"
-                y="170"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#000">
-            B
           </text>
         
         <rect x="28" y="0"
@@ -402,7 +276,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            C#
+            F#
           </text>
         
         <rect x="68" y="0"
@@ -416,21 +290,21 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            D#
+            G#
           </text>
         
-        <rect x="148" y="0"
+        <rect x="108" y="0"
               width="24" height="110"
-              fill="#1b1a19"
+              fill="#f59e0b"
               stroke="#121110"/>
       
-          <text x="160"
+          <text x="120"
                 y="100"
                 font-size="12"
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            F#
+            A#
           </text>
         
         <rect x="188" y="0"
@@ -444,12 +318,12 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            G#
+            C#
           </text>
         
         <rect x="228" y="0"
               width="24" height="110"
-              fill="#f59e0b"
+              fill="#1b1a19"
               stroke="#121110"/>
       
           <text x="240"
@@ -458,7 +332,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            A#
+            D#
           </text>
         
         <rect x="308" y="0"
@@ -472,7 +346,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            C#
+            F#
           </text>
         
         <rect x="348" y="0"
@@ -486,21 +360,21 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            D#
+            G#
           </text>
         
-        <rect x="428" y="0"
+        <rect x="388" y="0"
               width="24" height="110"
               fill="#1b1a19"
               stroke="#121110"/>
       
-          <text x="440"
+          <text x="400"
                 y="100"
                 font-size="12"
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            F#
+            A#
           </text>
         
         <rect x="468" y="0"
@@ -514,7 +388,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            G#
+            C#
           </text>
         
         <rect x="508" y="0"
@@ -528,7 +402,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            A#
+            D#
           </text>
         
         <rect x="588" y="0"
@@ -542,7 +416,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            C#
+            F#
           </text>
         
         <rect x="628" y="0"
@@ -556,43 +430,15 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            D#
-          </text>
-        
-        <rect x="708" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="720"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            F#
-          </text>
-        
-        <rect x="748" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="760"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
             G#
           </text>
         
-        <rect x="788" y="0"
+        <rect x="668" y="0"
               width="24" height="110"
               fill="#1b1a19"
               stroke="#121110"/>
       
-          <text x="800"
+          <text x="680"
                 y="100"
                 font-size="12"
                 font-family="Arial, sans-serif"
@@ -601,77 +447,7 @@
             A#
           </text>
         
-        <rect x="868" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="880"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            C#
-          </text>
-        
-        <rect x="908" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="920"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            D#
-          </text>
-        
-        <rect x="988" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="1000"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            F#
-          </text>
-        
-        <rect x="1028" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="1040"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            G#
-          </text>
-        
-        <rect x="1068" y="0"
-              width="24" height="110"
-              fill="#1b1a19"
-              stroke="#121110"/>
-      
-          <text x="1080"
-                y="100"
-                font-size="12"
-                font-family="Arial, sans-serif"
-                text-anchor="middle"
-                fill="#fff">
-            A#
-          </text>
-        
-      <text x="560" y="150"
+      <text x="380" y="150"
             font-size="33"
             font-family="Arial, sans-serif"
             font-weight="bold"
