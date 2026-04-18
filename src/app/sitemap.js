@@ -1,4 +1,4 @@
-import { getAllChordTypes, getAllNotes, getSlugForChord, getSlugForNote } from "@/lib/api";
+import { getAllChordTypes, getAllNotes, getAllScaleTypes, getSlugForChord, getSlugForNote, getSlugForScale } from "@/lib/api";
 import { SITE_ORIGIN } from "@/lib/constants";
 
 function generateSlashChordUrls() {
@@ -36,9 +36,19 @@ function generateChordUrls() {
     return chordUrls;
 }
 
+function generateScaleUrls() {
+    const notes = getAllNotes();
+    const scaleTypes = getAllScaleTypes();
+    return notes.flatMap((note) =>
+        scaleTypes.map((scaleType) => {
+            const scaleSlug = getSlugForScale(note, scaleType);
+            return { url: `${SITE_ORIGIN}/scales/${scaleSlug}/`, changeFrequency: "yearly", priority: 0.7 };
+        })
+    );
+}
+
 export async function generateSitemaps() {
-    // Fetch the total number of products and calculate the number of sitemaps needed
-    return [{ id: "main" }, { id: "chords" }, { id: "slash-chords" }];
+    return [{ id: "main" }, { id: "chords" }, { id: "slash-chords" }, { id: "scales" }];
 }
 
 export default async function sitemap(props) {
@@ -49,12 +59,15 @@ export default async function sitemap(props) {
         case "main":
             return [
                 { url: `${SITE_ORIGIN}/`, changeFrequency: "monthly", priority: 1 },
-                { url: `${SITE_ORIGIN}/chords/`, changeFrequency: "monthly", priority: 0.9 }
+                { url: `${SITE_ORIGIN}/chords/`, changeFrequency: "monthly", priority: 0.9 },
+                { url: `${SITE_ORIGIN}/scales/`, changeFrequency: "monthly", priority: 0.9 }
             ];
         case "chords":
             return [...chordUrls];
         case "slash-chords":
             return [...slashChordUrls];
+        case "scales":
+            return generateScaleUrls();
         default:
             return [];
     }
