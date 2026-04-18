@@ -55,6 +55,11 @@ export function getSlugForChord(note, chordType) {
     return chordSlug;
 }
 
+export function getSlugFromScale(note, scaleType) {
+    const scaleSlug = [note.name, scaleType.name].filter(Boolean).map(translateToSlug).join("-");
+    return scaleSlug;
+}
+
 export function getSlugForNote(note) {
     return translateToSlug(note.name);
 }
