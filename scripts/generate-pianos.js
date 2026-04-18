@@ -3,7 +3,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { generatePianoSVG } from "../src/lib/piano.js";
 import { notes, intervals } from "@benjamindehli/music-utils";
-import { getAllChordTypes, getAllScaleTypes, getSlugForChord, getSlugForNote, getSlugFromScale } from "../src/lib/api.js";
+import { getAllChordTypes, getAllScaleTypes, getSlugForChord, getSlugForNote, getSlugForScale } from "../src/lib/api.js";
 
 const OUTPUT_IMAGES_DIR = path.join(process.cwd(), "public/images");
 const OUTPUT_CHORDS_DIR = path.join(process.cwd(), "public/images/chords");
@@ -78,7 +78,7 @@ async function generateSvgForChord(rootNote, chordType, bassNote) {
 
 async function generateSvgForScale(rootNote, scaleType) {
     const notesInScale = scaleType.halfSteps.map((halfStep) => rootNote.number + halfStep);
-    const filenameBase = getSlugFromScale(rootNote, scaleType);
+    const filenameBase = getSlugForScale(rootNote, scaleType);
     const svgPath = path.join(OUTPUT_SCALES_DIR, "svg", `${filenameBase}.svg`);
     const pngPath = path.join(OUTPUT_SCALES_DIR, "png", `${filenameBase}.png`);
 
