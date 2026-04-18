@@ -4,6 +4,9 @@ import {
     getAbsoluteNoteNumber,
     getAllNotes,
     getAllScaleTypes,
+    getImageDimensions,
+    getImagePngUrlForScaleSlug,
+    getImagesWithDimensionsForScale,
     getIntervalsWithRelativeNotesForScale,
     getScaleBySlug,
     getScaleMatches,
@@ -37,8 +40,11 @@ export async function generateMetadata({ params }) {
             : noteNames.slice(0, -1).join(", ") + " and " + noteNames[noteNames.length - 1];
 
     const title = scaleName;
-    const description = `Learn the ${scaleName}. The ${scaleName} consists of ${noteList}. Includes intervals and related scales.`;
+    const description = `Learn the ${scaleName}. The ${scaleName} consists of ${noteList}. Includes a piano keyboard diagram, intervals, and related scales.`;
     const canonicalUrl = `${SITE_ORIGIN}/scales/${scaleSlug}/`;
+    const imagePath = getImagePngUrlForScaleSlug(scaleSlug);
+    const imageUrl = `${SITE_ORIGIN}${imagePath}`;
+    const imageDimensions = await getImageDimensions(imagePath);
 
     return {
         title,
@@ -50,12 +56,14 @@ export async function generateMetadata({ params }) {
             siteName: "Music theory",
             locale: "en_US",
             title,
-            description
+            description,
+            images: [{ url: imageUrl, alt: `${scaleName} piano keyboard diagram`, ...imageDimensions }]
         },
         twitter: {
-            card: "summary",
+            card: "summary_large_image",
             title,
-            description
+            description,
+            images: [imageUrl]
         }
     };
 }
@@ -71,10 +79,17 @@ export default async function Page({ params }) {
           )
         : [];
 
+    const imagesWithDimensions = await getImagesWithDimensionsForScale(scaleSlug);
+
     return (
         <>
             <Breadcrumbs params={params} />
-            <ScaleInfo scale={scale} intervalsForScaleType={intervalsForScaleType} scaleMatches={scaleMatches} />
+            <ScaleInfo
+                scale={scale}
+                intervalsForScaleType={intervalsForScaleType}
+                scaleMatches={scaleMatches}
+                imagesWithDimensions={imagesWithDimensions}
+            />
         </>
     );
 }
