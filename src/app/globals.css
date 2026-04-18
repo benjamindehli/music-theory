@@ -67,11 +67,8 @@ figure {
     margin: 0 auto;
     padding: 2rem 1.5rem;
     flex: 1;
-    @media screen and (min-width: 1260px) {
+    @media screen and (min-width: 1280px) {
         max-width: 1200px;
-    }
-    @media screen and (min-width: 1600px) {
-        max-width: 1400px;
     }
 }
 
