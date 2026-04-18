@@ -69,6 +69,14 @@ export function getImageSvgUrlForChordSlug(chordSlug, bassNoteSlug) {
     return `/images/chords/svg/${chordSlug}${bassNotePart}.svg`;
 }
 
+export function getImagePngUrlForScaleSlug(scaleSlug) {
+    return `/images/scales/png/${scaleSlug}.png`;
+}
+
+export function getImageSvgUrlForScaleSlug(scaleSlug) {
+    return `/images/scales/svg/${scaleSlug}.svg`;
+}
+
 export function getAbsoluteNoteNumber(relativeNoteNumber, rootNoteNumber) {
     return rootNoteNumber + relativeNoteNumber;
 }
@@ -132,6 +140,16 @@ export async function getImageDimensions(imagePath) {
 
 export async function getImagesWithDimensions(chordSlug, bassNoteSlug) {
     const imagePaths = { png: getImagePngUrlForChordSlug(chordSlug, bassNoteSlug), svg: getImageSvgUrlForChordSlug(chordSlug, bassNoteSlug) };
+    const imagesWithSizes = {};
+    for (const [format, path] of Object.entries(imagePaths)) {
+        const dimensions = await getImageDimensions(path);
+        imagesWithSizes[format] = { url: `/${process.env.PAGES_BASE_PATH}${path}`, ...dimensions };
+    }
+    return imagesWithSizes;
+}
+
+export async function getImagesWithDimensionsForScale(scaleSlug) {
+    const imagePaths = { png: getImagePngUrlForScaleSlug(scaleSlug), svg: getImageSvgUrlForScaleSlug(scaleSlug) };
     const imagesWithSizes = {};
     for (const [format, path] of Object.entries(imagePaths)) {
         const dimensions = await getImageDimensions(path);
