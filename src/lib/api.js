@@ -1,4 +1,4 @@
-import { Chord, chordTypes, getChordsFromSelectedNotes, intervals, notes } from "@benjamindehli/music-utils";
+import { Chord, chordTypes, getChordsFromSelectedNotes, getScalesFromSelectedNotes, intervals, notes, Scale, scaleTypes } from "@benjamindehli/music-utils";
 import sharp from "sharp";
 
 export function getChordBySlug(slug) {
@@ -84,6 +84,41 @@ export function getIntervalsWithRelativeNotes(chord) {
 
 export function getChordMatches(noteNumbers) {
     return getChordsFromSelectedNotes(noteNumbers);
+}
+
+export function getScaleBySlug(slug) {
+    if (!slug) return null;
+    const rootNoteName = translateFromSlug(slug.split("-")[0]);
+    const scaleName = translateFromSlug(slug.split("-").slice(1).join("-"));
+    const scaleType = scaleTypes.find((s) => s.name === scaleName);
+    const rootNote = notes.find((n) => n.name === rootNoteName);
+    if (!scaleType || !rootNote) return null;
+    return new Scale({ rootNote, scaleType });
+}
+
+export function getAllScaleTypes() {
+    return scaleTypes;
+}
+
+export function getSlugForScale(note, scaleType) {
+    return [note.name, scaleType.name].filter(Boolean).map(translateToSlug).join("-");
+}
+
+export function getIntervalsForScaleType(scaleType) {
+    return scaleType.halfSteps.map((halfStep) => intervals.find((i) => i.number === halfStep));
+}
+
+export function getIntervalsWithRelativeNotesForScale(scale) {
+    const intervalsForScaleType = getIntervalsForScaleType(scale.scaleType);
+    return intervalsForScaleType.map((interval) => {
+        const relativeNoteNumber = getAbsoluteNoteNumber(interval.number, scale.rootNote.number);
+        const relativeNote = notes.find((note) => note.number === relativeNoteNumber % 12);
+        return { ...interval, relativeNote };
+    });
+}
+
+export function getScaleMatches(noteNumbers) {
+    return getScalesFromSelectedNotes(noteNumbers);
 }
 
 export async function getImageDimensions(imagePath) {
