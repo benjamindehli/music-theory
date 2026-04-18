@@ -1,4 +1,4 @@
-import { getChordBySlug, getNoteBySlug } from "@/lib/api";
+import { getChordBySlug, getNoteBySlug, getScaleBySlug } from "@/lib/api";
 import { SITE_ORIGIN } from "@/lib/constants";
 import Link from "next/link";
 import styles from "./Breadcrumbs.module.css";
@@ -44,11 +44,15 @@ export default async function Breadcrumbs({ params, section }) {
     }
 
     // SCALES
-    if (params?.scaleSlug) {
+    if (section === "scales" || params?.scaleSlug) {
         crumbs.push({ href: "/scales/", label: "Scales" });
+    }
+
+    if (params?.scaleSlug) {
+        const scale = getScaleBySlug(params.scaleSlug);
         crumbs.push({
             href: `/scales/${params.scaleSlug}/`,
-            label: params.scaleSlug
+            label: scale ? `${scale.rootNote.name} ${scale.scaleType.name}` : params.scaleSlug
         });
     }
 
