@@ -36,7 +36,6 @@ const intervalColors = [
 ];
 const bassNoteColor = "#f59e0b";
 const notesOrder = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-const whiteNotes = ["C", "D", "E", "F", "G", "A", "B"];
 
 /**
  * Converts a note to its corresponding MIDI number.
@@ -54,7 +53,7 @@ function noteToMidi(note) {
 
 /**
  * Returns a color for the given note based on its interval from the root note. If the note or root note is invalid, returns the fallback color.
- * @param {string|object} note - The note to get the color for. Can be a string (e.g. "C4") or an object with a name property (e.g. { name: "C4" }).
+ * @param {string|object} note - The note to get the color for. Can be a string (e.g. "C4") or an object with a name property (e.g. { name: "C4" }), or a MIDI number.
  * @param {number} rootNoteMidi - The MIDI number of the root note.
  * @param {string} fallbackColor - The color to return if the note or root note is invalid.
  * @returns {string} The color corresponding to the interval of the note from the root note, or the fallback color if invalid.
@@ -114,19 +113,41 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
     // --- Auto range detection ---
     const minMidi = Math.min(...renderMidiNotes);
     const maxMidi = Math.max(...renderMidiNotes);
-    const startOctave = Math.floor(minMidi / 12) - 1;
-    const endOctave = Math.floor(maxMidi / 12) - 1;
-    const octaves = endOctave - startOctave + 1;
+
+    // Snap start DOWN to nearest C (position 0) or F (position 5)
+    const minNoteInOctave = minMidi % 12;
+    const startMidi = minNoteInOctave >= 5
+        ? minMidi - minNoteInOctave + 5   // snap to F of the same octave
+        : minMidi - minNoteInOctave;       // snap to C of the same octave
+
+    // Snap end UP to nearest C (position 0), E (position 4), or B (position 11)
+    const maxNoteInOctave = maxMidi % 12;
+    const endMidi = maxNoteInOctave === 0
+        ? maxMidi                              // already at C, end here
+        : maxNoteInOctave <= 4
+            ? maxMidi - maxNoteInOctave + 4    // snap to E of the same octave
+            : maxMidi - maxNoteInOctave + 11;  // snap to B of the same octave
+
+    // Build a map of white key MIDI numbers to their x positions and indices
+    const whitePositionsInOctave = new Set([0, 2, 4, 5, 7, 9, 11]);
+    const blackPositionsInOctave = new Set([1, 3, 6, 8, 10]);
+    let whiteKeyCount = 0;
+    const whiteKeyByMidi = {}; // midi → { x, index }
+
+    for (let midi = startMidi; midi <= endMidi; midi++) {
+        if (whitePositionsInOctave.has(midi % 12)) {
+            whiteKeyByMidi[midi] = { x: whiteKeyCount * whiteKeyWidth, index: whiteKeyCount };
+            whiteKeyCount++;
+        }
+    }
 
     // Use MIDI numbers for matching activeness
     const normalizedMidiNotes = new Set(renderMidiNotes);
 
-    let svgWidth = whiteKeyWidth * 7 * octaves;
+    let svgWidth = whiteKeyWidth * whiteKeyCount;
     let svgHeight = whiteKeyHeight;
 
     let svg = `<svg width="${svgWidth}" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg">`;
-
-    let currentX = 0;
 
     // --- Determine root note for interval calculation ---
     let rootNoteMidi = null;
@@ -137,85 +158,66 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
     }
 
     // --- WHITE KEYS ---
-    // bassNoteMidi already defined above
-    for (let o = 0; o < octaves; o++) {
-        for (const noteName of whiteNotes) {
-            let note = noteName + (startOctave + o);
-            let noteLabel = noteName;
-            let midi = noteToMidi(note);
-            let isActive = normalizedMidiNotes.has(midi);
-            let isBass = bassNoteMidi !== null && midi === bassNoteMidi;
-            const notBassNoteColor = isActive ? getIntervalColor(note, rootNoteMidi, activeColor) : whiteColor;
+    for (let midi = startMidi; midi <= endMidi; midi++) {
+        if (!whitePositionsInOctave.has(midi % 12)) continue;
+        const { x } = whiteKeyByMidi[midi];
+        const noteName = notesOrder[midi % 12];
+        const isActive = normalizedMidiNotes.has(midi);
+        const isBass = bassNoteMidi !== null && midi === bassNoteMidi;
+        const fillColor = isBass ? bassNoteColor : isActive ? getIntervalColor(midi, rootNoteMidi, activeColor) : whiteColor;
 
-            svg += `
-        <rect x="${currentX}" y="0"
+        svg += `
+        <rect x="${x}" y="0"
               width="${whiteKeyWidth}" height="${whiteKeyHeight}"
-              fill="${isBass ? bassNoteColor : notBassNoteColor}"
+              fill="${fillColor}"
               stroke="${strokeColor}"/>
       `;
 
-            // Labels (white keys)
-            if (showLabels) {
-                svg += `
-          <text x="${currentX + whiteKeyWidth / 2}"
+        // Labels (white keys)
+        if (showLabels) {
+            svg += `
+          <text x="${x + whiteKeyWidth / 2}"
                 y="${whiteKeyHeight - 10}"
                 font-size="${fontSize}"
                 font-family="${fontFamily}"
                 text-anchor="middle"
                 fill="#000">
-            ${noteLabel}
+            ${noteName}
           </text>
         `;
-            }
-
-            currentX += whiteKeyWidth;
         }
     }
 
     // --- BLACK KEYS ---
-    const blackKeyOffsets = {
-        "C#": 0.7,
-        "D#": 1.7,
-        "F#": 3.7,
-        "G#": 4.7,
-        "A#": 5.7
-    };
+    for (let midi = startMidi; midi <= endMidi; midi++) {
+        if (!blackPositionsInOctave.has(midi % 12)) continue;
+        const prevWhite = whiteKeyByMidi[midi - 1];
+        if (!prevWhite) continue;
+        const noteName = notesOrder[midi % 12];
+        const x = (prevWhite.index + 0.7) * whiteKeyWidth - blackKeyWidth / 2;
+        const isActive = normalizedMidiNotes.has(midi);
+        const isBass = bassNoteMidi !== null && midi === bassNoteMidi;
+        const fillColor = isBass ? bassNoteColor : isActive ? getIntervalColor(midi, rootNoteMidi, activeColor) : blackColor;
 
-    for (let o = 0; o < octaves; o++) {
-        let baseIndex = o * 7;
-
-        for (let key in blackKeyOffsets) {
-            let octave = startOctave + o;
-            let note = key + octave;
-            let noteLabel = key;
-            let midi = noteToMidi(note);
-            let isActive = normalizedMidiNotes.has(midi);
-            let isBass = bassNoteMidi !== null && midi === bassNoteMidi;
-
-            let offset = blackKeyOffsets[key];
-            let x = (baseIndex + offset) * whiteKeyWidth - blackKeyWidth / 2;
-            const notBassNoteColor = isActive ? getIntervalColor(note, rootNoteMidi, activeColor) : blackColor;
-
-            svg += `
+        svg += `
         <rect x="${x + blackKeyWidth / 2}" y="0"
               width="${blackKeyWidth}" height="${blackKeyHeight}"
-              fill="${isBass ? bassNoteColor : notBassNoteColor}"
+              fill="${fillColor}"
               stroke="${strokeColor}"/>
       `;
 
-            // Labels (black keys optional)
-            if (showLabels && showBlackKeyLabels) {
-                svg += `
+        // Labels (black keys optional)
+        if (showLabels && showBlackKeyLabels) {
+            svg += `
           <text x="${x + blackKeyWidth}"
                 y="${blackKeyHeight - 10}"
                 font-size="${fontSize}"
                 font-family="${fontFamily}"
                 text-anchor="middle"
                 fill="#fff">
-            ${noteLabel}
+            ${noteName}
           </text>
         `;
-            }
         }
     }
 
