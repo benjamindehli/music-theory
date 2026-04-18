@@ -17,6 +17,11 @@
     margin: 0 0 1.5rem;
 }
 
+.diagram {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+}
+
 .notesSection {
     margin-top: 1.75rem;
     padding-top: 1.5rem;

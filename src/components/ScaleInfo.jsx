@@ -2,7 +2,25 @@ import { getSlugForScale } from "@/lib/api";
 import Link from "next/link";
 import styles from "./ScaleInfo.module.css";
 
-export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches }) {
+function renderImageFigure(imagesWithDimensions, scale) {
+    const scaleName = `${scale?.rootNote?.name} ${scale?.scaleType?.name}`;
+    return (
+        <figure>
+            <picture>
+                <source srcSet={imagesWithDimensions.svg.url} type="image/svg+xml" />
+                <source srcSet={imagesWithDimensions.png.url} type="image/png" />
+                <img
+                    src={imagesWithDimensions.png.url}
+                    alt={`Piano keyboard showing the notes for the ${scaleName}`}
+                    height={imagesWithDimensions.png.height}
+                    width={imagesWithDimensions.png.width}
+                />
+            </picture>
+        </figure>
+    );
+}
+
+export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, imagesWithDimensions }) {
     const sameRootMatches = scaleMatches.filter((m) => m.scale.rootNote.name === scale?.rootNote?.name).map((m) => m.scale);
     const differentRootMatches = scaleMatches.filter((m) => m.scale.rootNote.name !== scale?.rootNote?.name).map((m) => m.scale);
     const scaleName = `${scale?.rootNote?.name} ${scale?.scaleType?.name}`;
@@ -24,6 +42,9 @@ export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches }
                     : ""}{" "}
                 {intervalsForScaleType?.length === 1 ? "note" : "notes"}.
             </p>
+            {imagesWithDimensions && (
+                <div className={styles.diagram}>{renderImageFigure(imagesWithDimensions, scale)}</div>
+            )}
             <section className={styles.notesSection}>
                 <h2 className={styles.notesTitle}>Notes in order</h2>
                 <ol className={styles.notesList}>
