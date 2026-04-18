@@ -53,6 +53,7 @@ figure {
     display: block;
     text-align: center;
     margin: 0;
+    overflow-x: auto;
 }
 
 .page-layout {
