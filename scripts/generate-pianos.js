@@ -17,10 +17,10 @@ const EXIF_DATA = {
     IFD0: {
         Copyright: "Benjamin Dehli"
     },
-        IFD3: {
-            GPSLatitudeRef: "N",
-            GPSLatitude: "59 26 44.6886",
-            GPSLongitudeRef: "E",
+    IFD3: {
+        GPSLatitudeRef: "N",
+        GPSLatitude: "59 26 44.6886",
+        GPSLongitudeRef: "E",
         GPSLongitude: "9 5 3.7104"
     }
 };
@@ -107,6 +107,12 @@ async function generate() {
                 if (bassNote.number === rootNote.number) continue; // Skip if bass note is same as root
                 await generateSvgForChord(rootNote, chordType, bassNote);
             }
+        }
+    }
+    const scaleTypes = getAllScaleTypes();
+    for (const rootNote of notes) {
+        for (const scaleType of scaleTypes) {
+            await generateSvgForScale(rootNote, scaleType);
         }
     }
 }
