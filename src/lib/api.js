@@ -1,4 +1,4 @@
-import { Chord, chordTypes, getChordsFromSelectedNotes, getScalesFromSelectedNotes, intervals, notes, Scale, scaleTypes } from "@benjamindehli/music-utils";
+import { Chord, chordTypes, getChordsFromSelectedNotes, getChordsInScale, getScalesFromSelectedNotes, intervals, notes, Scale, scaleTypes } from "@benjamindehli/music-utils";
 import sharp from "sharp";
 
 export function getChordBySlug(slug) {
@@ -127,6 +127,10 @@ export function getIntervalsWithRelativeNotesForScale(scale) {
 
 export function getScaleMatches(noteNumbers) {
     return getScalesFromSelectedNotes(noteNumbers);
+}
+
+export function getChordsForScale(scale) {
+    return getChordsInScale(scale);
 }
 
 export async function getImageDimensions(imagePath) {
