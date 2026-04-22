@@ -1,4 +1,6 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
+import ScaleFaqJsonLd from "@/components/ScaleFaqJsonLd";
+import ScaleHowToJsonLd from "@/components/ScaleHowToJsonLd";
 import ScaleInfo from "@/components/ScaleInfo";
 import {
     getAbsoluteNoteNumber,
@@ -86,6 +88,12 @@ export default async function Page({ params }) {
     return (
         <>
             <Breadcrumbs params={params} />
+            {scale && intervalsForScaleType && (
+                <>
+                    <ScaleFaqJsonLd scale={scale} intervalsForScaleType={intervalsForScaleType} />
+                    <ScaleHowToJsonLd scale={scale} intervalsForScaleType={intervalsForScaleType} />
+                </>
+            )}
             <ScaleInfo
                 scale={scale}
                 intervalsForScaleType={intervalsForScaleType}
