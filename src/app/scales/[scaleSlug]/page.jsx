@@ -4,6 +4,7 @@ import {
     getAbsoluteNoteNumber,
     getAllNotes,
     getAllScaleTypes,
+    getChordsForScale,
     getImageDimensions,
     getImagePngUrlForScaleSlug,
     getImagesWithDimensionsForScale,
@@ -79,6 +80,7 @@ export default async function Page({ params }) {
           )
         : [];
 
+    const chordsInScale = scale ? getChordsForScale(scale) : [];
     const imagesWithDimensions = await getImagesWithDimensionsForScale(scaleSlug);
 
     return (
@@ -88,6 +90,7 @@ export default async function Page({ params }) {
                 scale={scale}
                 intervalsForScaleType={intervalsForScaleType}
                 scaleMatches={scaleMatches}
+                chordsInScale={chordsInScale}
                 imagesWithDimensions={imagesWithDimensions}
             />
         </>

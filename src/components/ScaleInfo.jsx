@@ -1,4 +1,4 @@
-import { getSlugForScale } from "@/lib/api";
+import { getSlugForChord, getSlugForScale } from "@/lib/api";
 import Link from "next/link";
 import styles from "./ScaleInfo.module.css";
 
@@ -20,10 +20,18 @@ function renderImageFigure(imagesWithDimensions, scale) {
     );
 }
 
-export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, imagesWithDimensions }) {
+export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, chordsInScale, imagesWithDimensions }) {
     const sameRootMatches = scaleMatches.filter((m) => m.scale.rootNote.name === scale?.rootNote?.name).map((m) => m.scale);
     const differentRootMatches = scaleMatches.filter((m) => m.scale.rootNote.name !== scale?.rootNote?.name).map((m) => m.scale);
     const scaleName = `${scale?.rootNote?.name} ${scale?.scaleType?.name}`;
+
+    const chordsByRoot = chordsInScale?.reduce((acc, chord) => {
+        const key = chord.rootNote.name;
+        if (!acc[key]) acc[key] = { rootNote: chord.rootNote, chords: [] };
+        acc[key].chords.push(chord);
+        return acc;
+    }, {});
+    const chordGroups = chordsByRoot ? Object.values(chordsByRoot) : [];
 
     return (
         <main className={styles.main}>
@@ -42,9 +50,7 @@ export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, 
                     : ""}{" "}
                 {intervalsForScaleType?.length === 1 ? "note" : "notes"}.
             </p>
-            {imagesWithDimensions && (
-                <div className={styles.diagram}>{renderImageFigure(imagesWithDimensions, scale)}</div>
-            )}
+            {imagesWithDimensions && <div className={styles.diagram}>{renderImageFigure(imagesWithDimensions, scale)}</div>}
             <section className={styles.notesSection}>
                 <h2 className={styles.notesTitle}>Notes in order</h2>
                 <ol className={styles.notesList}>
@@ -81,6 +87,25 @@ export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, 
                             </li>
                         ))}
                     </ul>
+                </section>
+            )}
+            {chordGroups.length > 0 && (
+                <section className={styles.chordsSection}>
+                    <h2 className={styles.chordsTitle}>Chords in this scale</h2>
+                    {chordGroups.map(({ rootNote, chords }) => (
+                        <div key={rootNote.name} className={styles.chordsGroup}>
+                            <h3 className={styles.chordsGroupTitle}>{rootNote.name} chords</h3>
+                            <ul className={styles.chordList}>
+                                {chords.map((chord) => (
+                                    <li key={`${chord.rootNote.name}-${chord.chordType.name}`}>
+                                        <Link href={`/chords/${getSlugForChord(chord.rootNote, chord.chordType)}`}>
+                                            {chord.rootNote.name} {chord.chordType.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
                 </section>
             )}
         </main>
