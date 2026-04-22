@@ -51,16 +51,23 @@ export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, 
                 {intervalsForScaleType?.length === 1 ? "note" : "notes"}.
             </p>
             {imagesWithDimensions && <div className={styles.diagram}>{renderImageFigure(imagesWithDimensions, scale)}</div>}
-            <section className={styles.notesSection}>
-                <h2 className={styles.notesTitle}>Notes in order</h2>
-                <ol className={styles.notesList}>
-                    {intervalsForScaleType?.map((interval) => (
-                        <li key={interval.number}>
-                            <strong>{interval.relativeNote?.name}</strong> &mdash; {interval.fullName}
+            {scale && intervalsForScaleType && (
+                <section className={styles.howToSection}>
+                    <h2 className={styles.howToTitle}>How to play the {scaleName}</h2>
+                    <ol className={styles.howToSteps}>
+                        <li>
+                            Find <strong>{scale.rootNote.name}</strong> (Root) on the piano keyboard
                         </li>
-                    ))}
-                </ol>
-            </section>
+                        {intervalsForScaleType.filter((i) => i.number > 0).map((interval) => (
+                            <li key={interval.number}>
+                                Play <strong>{interval.relativeNote.name}</strong> ({interval.fullName}) &mdash; {interval.number}{" "}
+                                {interval.number === 1 ? "semitone" : "semitones"} above {scale.rootNote.name}
+                            </li>
+                        ))}
+                        <li>Play all {intervalsForScaleType.length} notes in ascending order to perform the {scaleName}</li>
+                    </ol>
+                </section>
+            )}
             {sameRootMatches?.length > 0 && (
                 <section className={styles.relatedSection}>
                     <h2 className={styles.relatedTitle}>Scales with same root</h2>
