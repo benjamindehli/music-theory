@@ -5,7 +5,14 @@ import styles from "./page.module.css";
 
 export const metadata = {
     title: "Browse all scales",
-    description: "Browse the complete scale library — all scale types for every root note, organized by pentatonic, hexatonic, heptatonic, and octatonic scales."
+    description: "Browse the complete scale library — all scale types for every root note, organized by pentatonic, hexatonic, heptatonic, and octatonic scales.",
+    alternates: {
+        canonical: "https://benjamindehli.github.io/music-theory/scales/"
+    },
+    openGraph: {
+        type: "website",
+        url: "https://benjamindehli.github.io/music-theory/scales/"
+    }
 };
 
 export default async function Scales({ params }) {

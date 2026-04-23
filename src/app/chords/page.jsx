@@ -5,7 +5,14 @@ import styles from "./page.module.css";
 
 export const metadata = {
     title: "Browse all chords",
-    description: "Browse the complete chord library — all chord types for every root note, organized by triads, tetrads, and beyond."
+    description: "Browse the complete chord library — all chord types for every root note, organized by triads, tetrads, and beyond.",
+    alternates: {
+        canonical: "https://benjamindehli.github.io/music-theory/chords/"
+    },
+    openGraph: {
+        type: "website",
+        url: "https://benjamindehli.github.io/music-theory/chords/"
+    }
 };
 
 export default async function Chords({ params }) {

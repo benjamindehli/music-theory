@@ -5,7 +5,14 @@ import styles from "./page.module.css";
 
 export const metadata = {
     title: { absolute: "Music theory" },
-    description: "Interactive music theory reference covering chords, scales, intervals, and piano keyboard diagrams."
+    description: "Interactive music theory reference covering chords, scales, intervals, and piano keyboard diagrams.",
+    alternates: {
+        canonical: "https://benjamindehli.github.io/music-theory/"
+    },
+    openGraph: {
+        type: "website",
+        url: "https://benjamindehli.github.io/music-theory/"
+    }
 };
 
 export default function Home() {
