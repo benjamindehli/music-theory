@@ -1,0 +1,24 @@
+# Music Theory
+
+> Interactive music theory reference covering chords, scales, intervals, and piano keyboard diagrams.
+
+A static web application for exploring music theory concepts. All chord and scale data is pre-generated at build time from the `@benjamindehli/music-utils` package. Pages include piano keyboard diagrams (SVG and PNG), interval listings, and related chord/scale suggestions.
+
+## Chords
+
+- [Browse all chords](/music-theory/chords): Complete chord library organised by number of notes — triads, tetrads, pentads, hexads, and heptads. Every chord type is available for all 12 root notes.
+- [Individual chord page](/music-theory/chords/c-major): Each chord page lists the notes, intervals, a piano keyboard diagram, slash chord variants, scales that contain the chord, and related chords.
+- [Slash chord variant](/music-theory/chords/c-major/e): Slash chords (e.g. C/E) show the same chord voiced over a different bass note.
+
+## Scales
+
+- [Browse all scales](/music-theory/scales): Complete scale library organised by number of notes — pentatonic (5), hexatonic (6), heptatonic (7), and octatonic (8). Every scale type is available for all 12 root notes.
+- [Individual scale page](/music-theory/scales/c-major): Each scale page lists the notes, intervals, a piano keyboard diagram, chords that belong to the scale, and related scales.
+
+## Notes
+
+Chord and scale slugs use note names with sharps written as `-sharp` (e.g. `c-sharp-major`) and flats as `-flat` (e.g. `b-flat-major`).
+
+## Content
+
+All content is factual music theory data. There is no user-generated content, no server, and no database. The site is a read-only reference tool.
