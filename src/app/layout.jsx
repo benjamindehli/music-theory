@@ -2,14 +2,18 @@ import SiteJsonLd from "@/components/SiteJsonLd";
 import "./globals.css";
 
 export const metadata = {
+    metadataBase: new URL("https://benjamindehli.github.io"),
     title: {
         template: "%s | Music theory",
         default: "Music theory"
     },
-    description: "A web app for exploring music theory concepts, including chords, scales, and intervals.",
+    description: "Interactive music theory reference covering chords, scales, intervals, and piano keyboard diagrams.",
     openGraph: {
         siteName: "Music theory",
         locale: "en_US"
+    },
+    twitter: {
+        card: "summary_large_image"
     }
 };
 

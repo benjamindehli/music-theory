@@ -42,8 +42,8 @@ export async function generateMetadata({ params }) {
             ? noteNames.join(" and ")
             : noteNames.slice(0, -1).join(", ") + " and " + noteNames[noteNames.length - 1];
 
-    const title = scaleName;
-    const description = `Learn the ${scaleName}. The ${scaleName} consists of ${noteList}. Includes a piano keyboard diagram, intervals, and related scales.`;
+    const title = `${scaleName} scale`;
+    const description = `Learn how to play the ${scaleName} scale on piano. The ${scaleName} scale consists of ${noteList}. Includes a piano keyboard diagram, intervals, and related scales.`;
     const canonicalUrl = `${SITE_ORIGIN}/scales/${scaleSlug}/`;
     const imagePath = getImagePngUrlForScaleSlug(scaleSlug);
     const imageUrl = `${SITE_ORIGIN}${imagePath}`;
