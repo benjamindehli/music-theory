@@ -11,7 +11,7 @@ const jsonLd = {
             "@id": `${SITE_ORIGIN}/#website`,
             "name": "Music theory",
             "url": `${SITE_ORIGIN}/`,
-            "description": "Interactive music theory reference covering chords, intervals, and piano keyboard diagrams.",
+            "description": "Interactive music theory reference covering chords, scales, intervals, and piano keyboard diagrams.",
             "inLanguage": "en",
             "author": { "@id": AUTHOR_ID },
             "publisher": { "@id": PUBLISHER_ID },
