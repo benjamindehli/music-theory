@@ -26,11 +26,11 @@ export function getIntervalsForChordType(chordType) {
 }
 
 export function translateToSlug(string) {
-    return string.replace("#", "sharp").replace("b", "flat").replaceAll(/\s+/g, "-");
+    return string.replace("#", "sharp").replace("♭", "flat").replaceAll(/\s+/g, "-");
 }
 
 export function translateFromSlug(string) {
-    return string.replace("sharp", "#").replace("flat", "b").replaceAll("-", " ");
+    return string.replace("sharp", "#").replace("flat", "♭").replaceAll("-", " ");
 }
 
 export function getAllChordSlugs() {
