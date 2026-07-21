@@ -161,8 +161,10 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
     for (let midi = startMidi; midi <= endMidi; midi++) {
         if (!whitePositionsInOctave.has(midi % 12)) continue;
         const { x } = whiteKeyByMidi[midi];
-        const noteName = notesOrder[midi % 12];
         const isActive = normalizedMidiNotes.has(midi);
+        // Highlighted keys use the chord/scale's correct enharmonic spelling (e.g. "Bb");
+        // reference keys keep the neutral sharp name.
+        const noteName = (isActive && options.spelledNoteNames?.[midi % 12]) || notesOrder[midi % 12];
         const isBass = bassNoteMidi !== null && midi === bassNoteMidi;
         const fillColor = isBass ? bassNoteColor : isActive ? getIntervalColor(midi, rootNoteMidi, activeColor) : whiteColor;
 
@@ -193,9 +195,11 @@ export function generatePianoSVG(activeNotes = [], options = {}) {
         if (!blackPositionsInOctave.has(midi % 12)) continue;
         const prevWhite = whiteKeyByMidi[midi - 1];
         if (!prevWhite) continue;
-        const noteName = notesOrder[midi % 12];
         const x = (prevWhite.index + 0.7) * whiteKeyWidth - blackKeyWidth / 2;
         const isActive = normalizedMidiNotes.has(midi);
+        // Highlighted keys use the chord/scale's correct enharmonic spelling (e.g. "Gb");
+        // reference keys keep the neutral sharp name.
+        const noteName = (isActive && options.spelledNoteNames?.[midi % 12]) || notesOrder[midi % 12];
         const isBass = bassNoteMidi !== null && midi === bassNoteMidi;
         const fillColor = isBass ? bassNoteColor : isActive ? getIntervalColor(midi, rootNoteMidi, activeColor) : blackColor;
 

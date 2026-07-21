@@ -14,7 +14,8 @@ import {
     getIntervalsWithRelativeNotes,
     getNoteBySlug,
     getSlugForChord,
-    getSlugForNote
+    getSlugForNote,
+    getSpelledBassNote
 } from "@/lib/api";
 import { SITE_ORIGIN } from "@/lib/constants";
 
@@ -28,11 +29,12 @@ export async function generateStaticParams() {
             return chordTypes.flatMap((chordType) => {
                 const chordSlug = getSlugForChord(note, chordType);
                 return notes.map((bassNote) => {
-                    const bassNoteSlug = getSlugForNote(bassNote);
-                    if (bassNote.name === note.name) {
-                        // Skip if bass note is the same as the root note
+                    if (bassNote.number === note.number) {
+                        // Skip if bass note is the same pitch class as the root note
                         return null;
                     }
+                    // Spell the bass in the chord's context so the slug matches the label.
+                    const bassNoteSlug = getSlugForNote(getSpelledBassNote(note, chordType, bassNote));
                     return { chordSlug, bassNoteSlug };
                 });
             });
@@ -44,8 +46,8 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
     const { chordSlug, bassNoteSlug } = await params;
-    const chord = getChordBySlug(chordSlug);
-    const bassNote = getNoteBySlug(bassNoteSlug);
+    const chord = getChordBySlug(chordSlug, bassNoteSlug);
+    const bassNote = chord?.bassNote ?? getNoteBySlug(bassNoteSlug);
     if (!chord || !bassNote) return {};
 
     const chordName = `${chord.rootNote.name} ${chord.chordType.name}`;
@@ -88,8 +90,8 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
     const { chordSlug, bassNoteSlug } = await params;
-    const chord = getChordBySlug(chordSlug);
-    const bassNote = getNoteBySlug(bassNoteSlug);
+    const chord = getChordBySlug(chordSlug, bassNoteSlug);
+    const bassNote = chord?.bassNote ?? getNoteBySlug(bassNoteSlug);
     const intervalsForChordType = chord ? getIntervalsWithRelativeNotes(chord) : null;
     const noteNumbers = chord?.chordType?.halfSteps.map((halfStep) => {
         return getAbsoluteNoteNumber(halfStep, chord.rootNote.number) + 12; // Add 12 to shift to the next octave, since the bass note is different from the root note

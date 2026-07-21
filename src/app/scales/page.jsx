@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { getAllNotes, getAllScaleTypes, getSlugForScale } from "@/lib/api";
+import { getAllNotes, getAllScaleTypes, getScaleRootDisplayName, getSlugForScale } from "@/lib/api";
 import Link from "next/link";
 import styles from "./page.module.css";
 
@@ -56,7 +56,7 @@ export default async function Scales({ params }) {
                                                 return (
                                                     <li key={scaleSlug}>
                                                         <Link href={`/scales/${scaleSlug}`}>
-                                                            {note.name} {scaleType.name}
+                                                            {getScaleRootDisplayName(note, scaleType)} {scaleType.name}
                                                         </Link>
                                                     </li>
                                                 );

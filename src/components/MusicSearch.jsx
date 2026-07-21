@@ -11,10 +11,10 @@ export default function MusicSearch({ chords, scales }) {
         const q = query.trim().toLowerCase();
         if (!q) return [];
         const chordResults = chords
-            .filter(({ label }) => label.toLowerCase().includes(q))
+            .filter(({ label, keywords }) => (keywords ?? label).toLowerCase().includes(q))
             .map((item) => ({ ...item, type: "chord" }));
         const scaleResults = scales
-            .filter(({ label }) => label.toLowerCase().includes(q))
+            .filter(({ label, keywords }) => (keywords ?? label).toLowerCase().includes(q))
             .map((item) => ({ ...item, type: "scale" }));
         return [...chordResults, ...scaleResults].slice(0, 20);
     }, [query, chords, scales]);

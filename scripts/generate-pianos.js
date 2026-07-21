@@ -3,7 +3,7 @@ import path from "node:path";
 import sharp from "sharp";
 import { generatePianoSVG } from "../src/lib/piano.js";
 import { notes, intervals } from "@benjamindehli/music-utils";
-import { getAllChordTypes, getAllScaleTypes, getSlugForChord, getSlugForNote, getSlugForScale } from "../src/lib/api.js";
+import { getAllChordTypes, getAllScaleTypes, getSlugForChord, getSlugForNote, getSlugForScale, getSpelledBassNote, getSpelledNoteNamesForChord, getSpelledNoteNamesForScale } from "../src/lib/api.js";
 
 const OUTPUT_IMAGES_DIR = path.join(process.cwd(), "public/images");
 const OUTPUT_CHORDS_DIR = path.join(process.cwd(), "public/images/chords");
@@ -55,13 +55,15 @@ async function generateSvgForChord(rootNote, chordType, bassNote) {
     const notesInChord = getNotesInChord(rootNote, chordType);
     let filenameBase = getSlugForChord(rootNote, chordType);
     if (bassNote) {
-        filenameBase += `_${getSlugForNote(bassNote)}`;
+        // Spell the bass in the chord's context so the filename matches the route slug.
+        filenameBase += `_${getSlugForNote(getSpelledBassNote(rootNote, chordType, bassNote))}`;
     }
     const svgPath = path.join(OUTPUT_CHORDS_DIR, "svg", `${filenameBase}.svg`);
     const pngPath = path.join(OUTPUT_CHORDS_DIR, "png", `${filenameBase}.png`);
 
-    // Pass rootNote as MIDI number
-    const svg = generatePianoSVG(notesInChord, { rootNote: rootNote.number, bassNote: bassNote?.number, chordType, intervals });
+    // Pass rootNote as MIDI number, plus correct enharmonic spellings for the highlighted keys
+    const spelledNoteNames = getSpelledNoteNamesForChord(rootNote, chordType, bassNote);
+    const svg = generatePianoSVG(notesInChord, { rootNote: rootNote.number, bassNote: bassNote?.number, chordType, intervals, spelledNoteNames });
 
     // Save SVG
     fs.writeFileSync(svgPath, svg);
@@ -82,8 +84,9 @@ async function generateSvgForScale(rootNote, scaleType) {
     const svgPath = path.join(OUTPUT_SCALES_DIR, "svg", `${filenameBase}.svg`);
     const pngPath = path.join(OUTPUT_SCALES_DIR, "png", `${filenameBase}.png`);
 
-    // Pass rootNote as MIDI number
-    const svg = generatePianoSVG(notesInScale, { rootNote: rootNote.number, scaleType, intervals });
+    // Pass rootNote as MIDI number, plus correct enharmonic spellings for the highlighted keys
+    const spelledNoteNames = getSpelledNoteNamesForScale(rootNote, scaleType);
+    const svg = generatePianoSVG(notesInScale, { rootNote: rootNote.number, scaleType, intervals, spelledNoteNames });
 
     // Save SVG
     fs.writeFileSync(svgPath, svg);

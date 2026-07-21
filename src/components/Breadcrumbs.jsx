@@ -36,7 +36,8 @@ export default async function Breadcrumbs({ params, section }) {
     }
 
     if (params?.bassNoteSlug) {
-        const bassNote = getNoteBySlug(params.bassNoteSlug);
+        const chordWithBass = getChordBySlug(params.chordSlug, params.bassNoteSlug);
+        const bassNote = chordWithBass?.bassNote ?? getNoteBySlug(params.bassNoteSlug);
         crumbs.push({
             href: `/chords/${params.chordSlug}/${params.bassNoteSlug}/`,
             label: `${bassNote ? bassNote.name : params.bassNoteSlug} (bass note)`

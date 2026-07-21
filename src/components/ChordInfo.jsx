@@ -68,7 +68,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
     return (
         <main className={styles.main}>
             <h1 className={styles.title}>
-                {chord?.rootNote?.name?.toUpperCase()} {chord?.chordType?.name}
+                {chord?.rootNote?.name} {chord?.chordType?.name}
                 {bassNote ? `/${bassNote.name}` : ""}
             </h1>
             <p className={styles.description}>

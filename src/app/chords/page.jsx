@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { getAllNotes, getAllChordTypes, getSlugForChord } from "@/lib/api";
+import { getAllNotes, getAllChordTypes, getChordRootDisplayName, getSlugForChord } from "@/lib/api";
 import Link from "next/link";
 import styles from "./page.module.css";
 
@@ -63,7 +63,7 @@ export default async function Chords({ params }) {
                                                 return (
                                                     <li key={chordSlug}>
                                                         <Link href={`/chords/${chordSlug}`}>
-                                                            {note.name} {chordType.name}
+                                                            {getChordRootDisplayName(note, chordType)} {chordType.name}
                                                         </Link>
                                                     </li>
                                                 );

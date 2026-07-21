@@ -1,21 +1,49 @@
-import { Chord, chordTypes, getChordsFromSelectedNotes, getChordsInScale, getScalesFromSelectedNotes, intervals, notes, Scale, scaleTypes } from "@benjamindehli/music-utils";
+import { Chord, chordTypes, getChordsFromSelectedNotes, getChordsInScale, getScalesFromSelectedNotes, getSpelledNotes, intervals, notes, parseNoteName, Scale, scaleTypes } from "@benjamindehli/music-utils";
 import sharp from "sharp";
 
-export function getChordBySlug(slug) {
+// Pitch class (0–11) of each natural letter, indexed the same way as
+// parseNoteName's letterIndex (C, D, E, F, G, A, B).
+const LETTER_PITCH_CLASSES = [0, 2, 4, 5, 7, 9, 11];
+
+// Pitch class (0–11) of a spelled note name such as "Eb", "F#", or "Bbb".
+function getNoteNumberFromName(name) {
+    const parsed = parseNoteName(name);
+    if (!parsed) return null;
+    return (((LETTER_PITCH_CLASSES[parsed.letterIndex] + parsed.alt) % 12) + 12) % 12;
+}
+
+// Note names are now context-aware (e.g. "Eb", "Db", "Bbb"), and slugs/URLs mirror
+// that spelling. Accidentals are encoded as words to match the site's "Csharp" style:
+// "Eb" → "Eflat", "F#" → "Fsharp", "Bbb" → "Bflatflat". Only the lowercase "b"
+// accidental is rewritten, so the uppercase note letter "B" is left untouched.
+function noteNameToSlug(name) {
+    return name.replaceAll("#", "sharp").replaceAll("b", "flat");
+}
+
+function noteSlugToName(slug) {
+    return slug.replaceAll("sharp", "#").replaceAll("flat", "b");
+}
+
+export function getChordBySlug(slug, bassNoteSlug) {
     if (!slug) return null;
-    const rootNoteName = translateFromSlug(slug.split("-")[0]);
-    const chordName = translateFromSlug(slug.split("-").slice(1).join("-"));
-    const chordType = chordTypes.find((chordType) => chordType.name === chordName);
-    const rootNote = notes.find((note) => note.name === rootNoteName);
-    const chord = new Chord({ rootNote, chordType });
+    const rootNumber = getNoteNumberFromName(noteSlugToName(slug.split("-")[0]));
+    // Match on the forward-encoded name rather than reversing the slug, so type names
+    // that contain hyphens (e.g. "Ode-to-Napoleon hexachord") resolve unambiguously.
+    const chordTypeSlug = slug.split("-").slice(1).join("-");
+    const chordType = chordTypes.find((chordType) => translateToSlug(chordType.name) === chordTypeSlug);
+    const rootNote = notes.find((note) => note.number === rootNumber);
+    // Passing the bass note lets the Chord constructor spell it in the chord's
+    // context, e.g. C major over pitch class 10 reads "C/Bb", not "C/A#".
+    const bassNumber = bassNoteSlug ? getNoteNumberFromName(noteSlugToName(bassNoteSlug)) : null;
+    const bassNote = bassNumber === null ? undefined : notes.find((note) => note.number === bassNumber);
+    const chord = new Chord({ rootNote, chordType, bassNote });
     return chord;
 }
 
 export function getNoteBySlug(slug) {
     if (!slug) return null;
-    const noteName = translateFromSlug(slug);
-    const note = notes.find((note) => note.name === noteName);
-    return note;
+    const number = getNoteNumberFromName(noteSlugToName(slug));
+    return number === null ? null : notes.find((note) => note.number === number);
 }
 
 export function getIntervalsForChordType(chordType) {
@@ -35,10 +63,7 @@ export function translateFromSlug(string) {
 
 export function getAllChordSlugs() {
     return notes.flatMap((note) => {
-        return chordTypes.map((chordType) => {
-            const chordSlug = [note.name, chordType.name].filter(Boolean).map(translateToSlug).join("-");
-            return chordSlug;
-        });
+        return chordTypes.map((chordType) => getSlugForChord(note, chordType));
     });
 }
 
@@ -50,13 +75,56 @@ export function getAllChordTypes() {
     return chordTypes;
 }
 
-export function getSlugForChord(note, chordType) {
-    const chordSlug = [note.name, chordType.name].filter(Boolean).map(translateToSlug).join("-");
-    return chordSlug;
+// The correctly-spelled root name for a chord/scale of this type built on `note`,
+// matching what the detail page shows (e.g. pitch class 3 reads "Eb" for a major
+// chord, not the raw "D#"). The "chord"/"scale" kind must match the Chord/Scale
+// class so the slug agrees with the rendered rootNote — the two spell some roots
+// differently (e.g. the altered scale on pitch class 1 is "C#", but as a chord "Db").
+export function getChordRootDisplayName(note, chordType) {
+    const [root] = getSpelledNotes(note.number, chordType.halfSteps, undefined, "chord");
+    return root ? root.name : note.name;
 }
 
+export function getScaleRootDisplayName(note, scaleType) {
+    const [root] = getSpelledNotes(note.number, scaleType.halfSteps, undefined, "scale");
+    return root ? root.name : note.name;
+}
+
+// Slugs use the same context-aware spelling as the page title, so a chord on
+// pitch class 3 lives at "/chords/Eflat-major" (title "Eb major"), not "Dsharp-major".
+export function getSlugForChord(note, chordType) {
+    const rootName = getChordRootDisplayName(note, chordType);
+    return [noteNameToSlug(rootName), translateToSlug(chordType.name)].filter(Boolean).join("-");
+}
+
+// Slugs a note by its own (already-spelled) name. For a slash-chord bass, pass the
+// note spelled in the chord's context (see getSpelledBassNote).
 export function getSlugForNote(note) {
-    return translateToSlug(note.name);
+    return noteNameToSlug(note.name);
+}
+
+// The slash-chord bass note spelled in the chord's context (e.g. "Bb", not "A#"),
+// so its slug and label agree with the chord.
+export function getSpelledBassNote(rootNote, chordType, bassNote) {
+    const chord = new Chord({ rootNote, chordType, bassNote });
+    return chord?.bassNote;
+}
+
+// Maps each pitch class in a chord/scale to its context-aware spelling, so the
+// piano-diagram generator can label the highlighted keys correctly (e.g. "Bb", "Gb").
+export function getSpelledNoteNamesForChord(rootNote, chordType, bassNote) {
+    const chord = new Chord({ rootNote, chordType, bassNote });
+    const map = {};
+    chord.getNotes().forEach((note) => (map[note.number] = note.name));
+    if (chord.bassNote) map[chord.bassNote.number] = chord.bassNote.name;
+    return map;
+}
+
+export function getSpelledNoteNamesForScale(rootNote, scaleType) {
+    const scale = new Scale({ rootNote, scaleType });
+    const map = {};
+    scale.getNotes().forEach((note) => (map[note.number] = note.name));
+    return map;
 }
 
 export function getImagePngUrlForChordSlug(chordSlug, bassNoteSlug) {
@@ -83,9 +151,12 @@ export function getAbsoluteNoteNumber(relativeNoteNumber, rootNoteNumber) {
 
 export function getIntervalsWithRelativeNotes(chord) {
     const intervalsForChordType = getIntervalsForChordType(chord.chordType);
+    // Spell each note with correct enharmonics for this chord (e.g. F minor → Ab,
+    // not G#), matching each interval to its spelled note by pitch class.
+    const spelledByPitchClass = new Map(chord.getNotes().map((note) => [note.number, note]));
     return intervalsForChordType.map((interval) => {
-        const relativeNoteNumber = getAbsoluteNoteNumber(interval.number, chord.rootNote.number);
-        const relativeNote = notes.find((note) => note.number === relativeNoteNumber % 12);
+        const pitchClass = getAbsoluteNoteNumber(interval.number, chord.rootNote.number) % 12;
+        const relativeNote = spelledByPitchClass.get(pitchClass) ?? notes.find((note) => note.number === pitchClass);
         return { ...interval, relativeNote };
     });
 }
@@ -96,11 +167,11 @@ export function getChordMatches(noteNumbers) {
 
 export function getScaleBySlug(slug) {
     if (!slug) return null;
-    const rootNoteName = translateFromSlug(slug.split("-")[0]);
-    const scaleName = translateFromSlug(slug.split("-").slice(1).join("-"));
-    const scaleType = scaleTypes.find((s) => s.name === scaleName);
-    const rootNote = notes.find((n) => n.name === rootNoteName);
-    if (!scaleType || !rootNote) return null;
+    const rootNumber = getNoteNumberFromName(noteSlugToName(slug.split("-")[0]));
+    const scaleTypeSlug = slug.split("-").slice(1).join("-");
+    const scaleType = scaleTypes.find((s) => translateToSlug(s.name) === scaleTypeSlug);
+    const rootNote = notes.find((n) => n.number === rootNumber);
+    if (!scaleType || rootNote === undefined) return null;
     return new Scale({ rootNote, scaleType });
 }
 
@@ -109,7 +180,8 @@ export function getAllScaleTypes() {
 }
 
 export function getSlugForScale(note, scaleType) {
-    return [note.name, scaleType.name].filter(Boolean).map(translateToSlug).join("-");
+    const rootName = getScaleRootDisplayName(note, scaleType);
+    return [noteNameToSlug(rootName), translateToSlug(scaleType.name)].filter(Boolean).join("-");
 }
 
 export function getIntervalsForScaleType(scaleType) {
@@ -118,9 +190,12 @@ export function getIntervalsForScaleType(scaleType) {
 
 export function getIntervalsWithRelativeNotesForScale(scale) {
     const intervalsForScaleType = getIntervalsForScaleType(scale.scaleType);
+    // Spell each note with correct enharmonics for this scale (e.g. F major → Bb,
+    // not A#), matching each interval to its spelled note by pitch class.
+    const spelledByPitchClass = new Map(scale.getNotes().map((note) => [note.number, note]));
     return intervalsForScaleType.map((interval) => {
-        const relativeNoteNumber = getAbsoluteNoteNumber(interval.number, scale.rootNote.number);
-        const relativeNote = notes.find((note) => note.number === relativeNoteNumber % 12);
+        const pitchClass = getAbsoluteNoteNumber(interval.number, scale.rootNote.number) % 12;
+        const relativeNote = spelledByPitchClass.get(pitchClass) ?? notes.find((note) => note.number === pitchClass);
         return { ...interval, relativeNote };
     });
 }

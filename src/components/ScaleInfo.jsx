@@ -36,7 +36,7 @@ export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, 
     return (
         <main className={styles.main}>
             <h1 className={styles.title}>
-                {scale?.rootNote?.name?.toUpperCase()} {scale?.scaleType?.name}
+                {scale?.rootNote?.name} {scale?.scaleType?.name}
             </h1>
             <p className={styles.description}>
                 The {scaleName} consists of the{" "}

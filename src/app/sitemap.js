@@ -1,4 +1,4 @@
-import { getAllChordTypes, getAllNotes, getAllScaleTypes, getSlugForChord, getSlugForNote, getSlugForScale } from "@/lib/api";
+import { getAllChordTypes, getAllNotes, getAllScaleTypes, getSlugForChord, getSlugForNote, getSlugForScale, getSpelledBassNote } from "@/lib/api";
 import { SITE_ORIGIN } from "@/lib/constants";
 
 function generateSlashChordUrls() {
@@ -9,11 +9,12 @@ function generateSlashChordUrls() {
             const chordSlug = getSlugForChord(note, chordType);
             return notes
                 .map((bassNote) => {
-                    const bassNoteSlug = getSlugForNote(bassNote);
-                    if (bassNote.name === note.name) {
-                        // Skip if bass note is the same as the root note
+                    if (bassNote.number === note.number) {
+                        // Skip if bass note is the same pitch class as the root note
                         return null;
                     }
+                    // Spell the bass in the chord's context so the URL matches the label.
+                    const bassNoteSlug = getSlugForNote(getSpelledBassNote(note, chordType, bassNote));
                     const url = `${SITE_ORIGIN}/chords/${chordSlug}/${bassNoteSlug}/`;
                     return { url, changeFrequency: "yearly", priority: 0.5 };
                 })
