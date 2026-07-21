@@ -94,7 +94,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            E
+            D##
           </text>
         
         <rect x="280" y="0"
@@ -108,7 +108,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            F
+            E#
           </text>
         
         <rect x="320" y="0"

@@ -122,7 +122,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            G
+            F##
           </text>
         
         <rect x="360" y="0"
@@ -234,7 +234,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            F#
+            E##
           </text>
         
         <rect x="348" y="0"

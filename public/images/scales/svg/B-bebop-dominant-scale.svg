@@ -136,7 +136,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            A
+            G##
           </text>
         
         <rect x="400" y="0"
@@ -248,7 +248,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            G#
+            F###
           </text>
         
         <rect x="388" y="0"
