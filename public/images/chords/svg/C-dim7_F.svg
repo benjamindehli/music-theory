@@ -136,7 +136,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            A
+            Bbb
           </text>
         
         <rect x="400" y="0"
@@ -220,7 +220,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            D#
+            Eb
           </text>
         
         <rect x="308" y="0"
@@ -234,7 +234,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            F#
+            Gb
           </text>
         
         <rect x="348" y="0"

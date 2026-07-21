@@ -304,7 +304,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            C
+            B#
           </text>
         
         <rect x="28" y="0"
@@ -514,7 +514,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            A#
+            Bb
           </text>
         
       <text x="440" y="150"

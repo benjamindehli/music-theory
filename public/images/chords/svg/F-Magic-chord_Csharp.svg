@@ -192,7 +192,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#000">
-            B
+            Cb
           </text>
         
         <rect x="560" y="0"
@@ -402,7 +402,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            F#
+            Gb
           </text>
         
         <rect x="468" y="0"
@@ -430,7 +430,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            A#
+            Bb
           </text>
         
         <rect x="588" y="0"
@@ -458,7 +458,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            D#
+            Eb
           </text>
         
         <rect x="708" y="0"
@@ -486,7 +486,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            G#
+            Ab
           </text>
         
         <rect x="788" y="0"
@@ -500,7 +500,7 @@
                 font-family="Arial, sans-serif"
                 text-anchor="middle"
                 fill="#fff">
-            A#
+            Bb
           </text>
         
       <text x="420" y="150"
