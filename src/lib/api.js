@@ -1,5 +1,5 @@
 import { Chord, chordTypes, getChordsFromSelectedNotes, getChordsInScale, getScalesFromSelectedNotes, getSpelledNotes, intervals, notes, parseNoteName, Scale, scaleTypes } from "@benjamindehli/music-utils";
-import sharp from "sharp";
+import { readFile } from "node:fs/promises";
 
 // Pitch class (0–11) of each natural letter, indexed the same way as
 // parseNoteName's letterIndex (C, D, E, F, G, A, B).
@@ -208,10 +208,24 @@ export function getChordsForScale(scale) {
     return getChordsInScale(scale);
 }
 
+// Reads the pixel dimensions of a generated diagram without pulling the native
+// `sharp` module into the build (its libvips binary fails to load on some CI
+// runners). The images are produced by scripts/generate-pianos.js, so both formats
+// have a well-defined header: PNG stores width/height as big-endian uint32s in the
+// IHDR chunk, and the SVG carries them as attributes on its root element.
 export async function getImageDimensions(imagePath) {
     try {
-        const { width, height } = await sharp(`public${imagePath}`).metadata();
-        return { width, height };
+        const filePath = `public${imagePath}`;
+        if (imagePath.endsWith(".svg")) {
+            const svg = await readFile(filePath, "utf8");
+            const openingTag = svg.match(/<svg\b[^>]*>/)?.[0] ?? "";
+            const width = Number(openingTag.match(/\bwidth="([\d.]+)"/)?.[1]);
+            const height = Number(openingTag.match(/\bheight="([\d.]+)"/)?.[1]);
+            if (Number.isFinite(width) && Number.isFinite(height)) return { width, height };
+            return undefined;
+        }
+        const buffer = await readFile(filePath);
+        return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
     } catch (error) {
         console.error("Error reading image metadata:", error);
     }
