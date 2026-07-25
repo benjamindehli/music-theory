@@ -11,16 +11,16 @@
   },
   "dependencies": {
     "@benjamindehli/music-utils": "^4.4.3",
-    "next": "16.2.10",
-    "react": "19.2.7",
-    "react-dom": "19.2.7",
+    "next": "16.2.12",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "^10.7.0",
-    "eslint-config-next": "16.2.10",
+    "eslint": "^10.8.0",
+    "eslint-config-next": "16.2.12",
     "globals": "^17.7.0"
   },
   "packageManager": "yarn@1.22.19+sha1.4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
