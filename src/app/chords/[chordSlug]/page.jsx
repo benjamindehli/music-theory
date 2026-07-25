@@ -8,6 +8,7 @@ import {
     getAllNotes,
     getChordBySlug,
     getChordMatches,
+    getChordNounSuffix,
     getImageDimensions,
     getImagePngUrlForChordSlug,
     getImagesWithDimensions,
@@ -36,6 +37,7 @@ export async function generateMetadata({ params }) {
     if (!chord) return {};
 
     const chordName = `${chord.rootNote.name} ${chord.chordType.name}`;
+    const chordLabel = `${chordName}${getChordNounSuffix(chord.chordType)}`;
     const intervals = getIntervalsWithRelativeNotes(chord);
     const noteNames = intervals.map((i) => i.relativeNote.name);
     const noteList =
@@ -43,8 +45,8 @@ export async function generateMetadata({ params }) {
             ? noteNames.join(" and ")
             : noteNames.slice(0, -1).join(", ") + " and " + noteNames[noteNames.length - 1];
 
-    const title = `${chordName} chord`;
-    const description = `Learn how to play the ${chordName} chord on piano. The ${chordName} chord consists of ${noteList}. Includes a piano keyboard diagram, intervals, and related chords.`;
+    const title = chordLabel;
+    const description = `Learn how to play the ${chordLabel} on piano. The ${chordLabel} consists of ${noteList}. Includes a piano keyboard diagram, intervals, and related chords.`;
     const canonicalUrl = `${SITE_ORIGIN}/chords/${chordSlug}/`;
     const imagePath = getImagePngUrlForChordSlug(chordSlug);
     const imageUrl = `${SITE_ORIGIN}${imagePath}`;
@@ -61,7 +63,7 @@ export async function generateMetadata({ params }) {
             locale: "en_US",
             title,
             description,
-            images: [{ url: imageUrl, alt: `${chordName} chord piano keyboard diagram`, ...imageDimensions }]
+            images: [{ url: imageUrl, alt: `${chordLabel} piano keyboard diagram`, ...imageDimensions }]
         },
         twitter: {
             card: "summary_large_image",

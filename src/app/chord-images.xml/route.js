@@ -1,4 +1,4 @@
-import { getAllChordTypes, getAllNotes, getImagePngUrlForChordSlug, getImageSvgUrlForChordSlug, getSlugForChord } from "@/lib/api";
+import { getAllChordTypes, getAllNotes, getChordNounSuffix, getImagePngUrlForChordSlug, getImageSvgUrlForChordSlug, getSlugForChord } from "@/lib/api";
 import { SITE_ORIGIN } from "@/lib/constants";
 
 export const dynamic = "force-static";
@@ -31,7 +31,7 @@ export async function GET() {
     const chordImageLocs = notes.flatMap((note) => {
         return chordTypes.flatMap((chordType) => {
             const chordSlug = getSlugForChord(note, chordType);
-            const title = `${note.name}${chordType.name} chord`;
+            const title = `${note.name}${chordType.name}${getChordNounSuffix(chordType)}`;
             const caption = `Piano keys with the notes for a ${title} highlighted.`;
             const pageLoc = `${SITE_ORIGIN}/chords/${chordSlug}/`;
             const imageLocs = [

@@ -1,6 +1,9 @@
+import { getChordNounSuffix } from "@/lib/api";
+
 export default function ChordHowToJsonLd({ chord, intervalsForChordType, bassNote }) {
     const chordName = `${chord.rootNote.name} ${chord.chordType.name}`;
     const fullChordName = bassNote ? `${chordName}/${bassNote.name}` : chordName;
+    const fullChordLabel = `${fullChordName}${getChordNounSuffix(chord.chordType)}`;
     const nonRootIntervals = intervalsForChordType.filter((i) => i.number > 0);
     const noteCount = intervalsForChordType.length + (bassNote ? 1 : 0);
 
@@ -34,14 +37,14 @@ export default function ChordHowToJsonLd({ chord, intervalsForChordType, bassNot
         position: position,
         text:
             noteCount === 1
-                ? `Press the note to sound the ${fullChordName} chord`
-                : `Press all ${noteCount} notes simultaneously to sound the ${fullChordName} chord`
+                ? `Press the note to sound the ${fullChordLabel}`
+                : `Press all ${noteCount} notes simultaneously to sound the ${fullChordLabel}`
     });
 
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        name: `How to play the ${fullChordName} chord on piano`,
+        name: `How to play the ${fullChordLabel} on piano`,
         step: steps
     };
 

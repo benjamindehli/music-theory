@@ -1,10 +1,11 @@
-import { getSlugForChord, getSlugForNote } from "@/lib/api";
+import { getChordNounSuffix, getSlugForChord, getSlugForNote } from "@/lib/api";
 import Link from "next/link";
 import styles from "./ChordInfo.module.css";
 
 function renderImageFigure(imagesWithDimensions, chord, bassNote) {
     const chordName = `${chord?.rootNote?.name} ${chord?.chordType?.name}`;
     const fullChordName = bassNote ? `${chordName}/${bassNote.name}` : chordName;
+    const fullChordLabel = `${fullChordName}${getChordNounSuffix(chord?.chordType)}`;
     return (
         <figure>
             <picture>
@@ -12,7 +13,7 @@ function renderImageFigure(imagesWithDimensions, chord, bassNote) {
                 <source srcSet={imagesWithDimensions.png.url} type="image/png" />
                 <img
                     src={imagesWithDimensions.png.url}
-                    alt={`Piano keyboard showing the notes for a ${fullChordName} chord`}
+                    alt={`Piano keyboard showing the notes for a ${fullChordLabel}`}
                     height={imagesWithDimensions.png.height}
                     width={imagesWithDimensions.png.width}
                 />
@@ -24,12 +25,13 @@ function renderImageFigure(imagesWithDimensions, chord, bassNote) {
 function renderHowToSection(chord, intervalsForChordType, bassNote) {
     const chordName = `${chord.rootNote.name} ${chord.chordType.name}`;
     const fullChordName = bassNote ? `${chordName}/${bassNote.name}` : chordName;
+    const fullChordLabel = `${fullChordName}${getChordNounSuffix(chord.chordType)}`;
     const nonRootIntervals = intervalsForChordType.filter((i) => i.number > 0);
     const noteCount = intervalsForChordType.length + (bassNote ? 1 : 0);
 
     return (
         <section className={styles.howToSection}>
-            <h2 className={styles.howToTitle}>How to play the {fullChordName} chord</h2>
+            <h2 className={styles.howToTitle}>How to play the {fullChordLabel}</h2>
             <ol className={styles.howToSteps}>
                 {bassNote && (
                     <li>
@@ -47,8 +49,8 @@ function renderHowToSection(chord, intervalsForChordType, bassNote) {
                 ))}
                 <li>
                     {noteCount === 1
-                        ? `Press the note to sound the ${fullChordName} chord`
-                        : `Press all ${noteCount} notes simultaneously to sound the ${fullChordName} chord`}
+                        ? `Press the note to sound the ${fullChordLabel}`
+                        : `Press all ${noteCount} notes simultaneously to sound the ${fullChordLabel}`}
                 </li>
             </ol>
         </section>
@@ -65,6 +67,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
     const nonRootMatches = filterChordMatchesByType(chordMatches, "nonRoot");
     const slashChordMatches = filterChordMatchesByType(chordMatches, "slashChord");
     const chordName = `${chord?.rootNote?.name} ${chord?.chordType?.name}`;
+    const chordLabel = `${chordName}${getChordNounSuffix(chord?.chordType)}`;
     return (
         <main className={styles.main}>
             <h1 className={styles.title}>
@@ -72,7 +75,7 @@ export default async function ChordInfo({ chord, intervalsForChordType, imagesWi
                 {bassNote ? `/${bassNote.name}` : ""}
             </h1>
             <p className={styles.description}>
-                The {chordName} chord consists of the{" "}
+                The {chordLabel} consists of the{" "}
                 {intervalsForChordType?.length
                     ? (() => {
                           const items = intervalsForChordType.map((interval) => `${interval.relativeNote?.name} (${interval.fullName})`);

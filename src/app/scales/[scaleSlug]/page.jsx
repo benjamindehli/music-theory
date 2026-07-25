@@ -13,6 +13,7 @@ import {
     getIntervalsWithRelativeNotesForScale,
     getScaleBySlug,
     getScaleMatches,
+    getScaleNounSuffix,
     getSlugForScale
 } from "@/lib/api";
 import { SITE_ORIGIN } from "@/lib/constants";
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }) {
     if (!scale) return {};
 
     const scaleName = `${scale.rootNote.name} ${scale.scaleType.name}`;
+    const scaleLabel = `${scaleName}${getScaleNounSuffix(scale.scaleType)}`;
     const intervals = getIntervalsWithRelativeNotesForScale(scale);
     const noteNames = intervals.map((i) => i.relativeNote.name);
     const noteList =
@@ -42,8 +44,8 @@ export async function generateMetadata({ params }) {
             ? noteNames.join(" and ")
             : noteNames.slice(0, -1).join(", ") + " and " + noteNames[noteNames.length - 1];
 
-    const title = `${scaleName} scale`;
-    const description = `Learn how to play the ${scaleName} scale on piano. The ${scaleName} scale consists of ${noteList}. Includes a piano keyboard diagram, intervals, and related scales.`;
+    const title = scaleLabel;
+    const description = `Learn how to play the ${scaleLabel} on piano. The ${scaleLabel} consists of ${noteList}. Includes a piano keyboard diagram, intervals, and related scales.`;
     const canonicalUrl = `${SITE_ORIGIN}/scales/${scaleSlug}/`;
     const imagePath = getImagePngUrlForScaleSlug(scaleSlug);
     const imageUrl = `${SITE_ORIGIN}${imagePath}`;
@@ -60,7 +62,7 @@ export async function generateMetadata({ params }) {
             locale: "en_US",
             title,
             description,
-            images: [{ url: imageUrl, alt: `${scaleName} piano keyboard diagram`, ...imageDimensions }]
+            images: [{ url: imageUrl, alt: `${scaleLabel} piano keyboard diagram`, ...imageDimensions }]
         },
         twitter: {
             card: "summary_large_image",

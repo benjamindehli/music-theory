@@ -1,9 +1,9 @@
-import { getSlugForChord, getSlugForScale } from "@/lib/api";
+import { getScaleNounSuffix, getSlugForChord, getSlugForScale } from "@/lib/api";
 import Link from "next/link";
 import styles from "./ScaleInfo.module.css";
 
 function renderImageFigure(imagesWithDimensions, scale) {
-    const scaleName = `${scale?.rootNote?.name} ${scale?.scaleType?.name}`;
+    const scaleLabel = `${scale?.rootNote?.name} ${scale?.scaleType?.name}${getScaleNounSuffix(scale?.scaleType)}`;
     return (
         <figure>
             <picture>
@@ -11,7 +11,7 @@ function renderImageFigure(imagesWithDimensions, scale) {
                 <source srcSet={imagesWithDimensions.png.url} type="image/png" />
                 <img
                     src={imagesWithDimensions.png.url}
-                    alt={`Piano keyboard showing the notes for the ${scaleName}`}
+                    alt={`Piano keyboard showing the notes for the ${scaleLabel}`}
                     height={imagesWithDimensions.png.height}
                     width={imagesWithDimensions.png.width}
                 />
@@ -23,7 +23,7 @@ function renderImageFigure(imagesWithDimensions, scale) {
 export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, chordsInScale, imagesWithDimensions }) {
     const sameRootMatches = scaleMatches.filter((m) => m.scale.rootNote.name === scale?.rootNote?.name).map((m) => m.scale);
     const differentRootMatches = scaleMatches.filter((m) => m.scale.rootNote.name !== scale?.rootNote?.name).map((m) => m.scale);
-    const scaleName = `${scale?.rootNote?.name} ${scale?.scaleType?.name}`;
+    const scaleLabel = `${scale?.rootNote?.name} ${scale?.scaleType?.name}${getScaleNounSuffix(scale?.scaleType)}`;
 
     const chordsByRoot = chordsInScale?.reduce((acc, chord) => {
         const key = chord.rootNote.name;
@@ -39,7 +39,7 @@ export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, 
                 {scale?.rootNote?.name} {scale?.scaleType?.name}
             </h1>
             <p className={styles.description}>
-                The {scaleName} consists of the{" "}
+                The {scaleLabel} consists of the{" "}
                 {intervalsForScaleType?.length
                     ? (() => {
                           const items = intervalsForScaleType.map((interval) => `${interval.relativeNote?.name} (${interval.fullName})`);
@@ -53,7 +53,7 @@ export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, 
             {imagesWithDimensions && <div className={styles.diagram}>{renderImageFigure(imagesWithDimensions, scale)}</div>}
             {scale && intervalsForScaleType && (
                 <section className={styles.howToSection}>
-                    <h2 className={styles.howToTitle}>How to play the {scaleName}</h2>
+                    <h2 className={styles.howToTitle}>How to play the {scaleLabel}</h2>
                     <ol className={styles.howToSteps}>
                         <li>
                             Find <strong>{scale.rootNote.name}</strong> (Root) on the piano keyboard
@@ -64,7 +64,7 @@ export default function ScaleInfo({ scale, intervalsForScaleType, scaleMatches, 
                                 {interval.number === 1 ? "semitone" : "semitones"} above {scale.rootNote.name}
                             </li>
                         ))}
-                        <li>Play all {intervalsForScaleType.length} notes in ascending order to perform the {scaleName}</li>
+                        <li>Play all {intervalsForScaleType.length} notes in ascending order to perform the {scaleLabel}</li>
                     </ol>
                 </section>
             )}

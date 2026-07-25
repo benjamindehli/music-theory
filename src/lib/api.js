@@ -90,6 +90,20 @@ export function getScaleRootDisplayName(note, scaleType) {
     return root ? root.name : note.name;
 }
 
+// Some chord/scale type names already end with the category noun — e.g. "Magic
+// chord", "Viennese trichord", "locrian mode", "natural minor scale". Appending
+// " chord"/" scale" to those reads as "…chord chord" or "…mode scale", so these
+// return the suffix (with a leading space) only when it isn't already implied by
+// the type name. Decisions come from the type name so slash chords like
+// "C Magic chord/E" are handled correctly.
+export function getChordNounSuffix(chordType) {
+    return /chord$/i.test(chordType?.name ?? "") ? "" : " chord";
+}
+
+export function getScaleNounSuffix(scaleType) {
+    return /(?:scale|mode)$/i.test(scaleType?.name ?? "") ? "" : " scale";
+}
+
 // Slugs use the same context-aware spelling as the page title, so a chord on
 // pitch class 3 lives at "/chords/Eflat-major" (title "Eb major"), not "Dsharp-major".
 export function getSlugForChord(note, chordType) {

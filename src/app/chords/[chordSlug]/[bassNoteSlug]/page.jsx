@@ -8,6 +8,7 @@ import {
     getAllNotes,
     getChordBySlug,
     getChordMatches,
+    getChordNounSuffix,
     getImageDimensions,
     getImagePngUrlForChordSlug,
     getImagesWithDimensions,
@@ -52,6 +53,9 @@ export async function generateMetadata({ params }) {
 
     const chordName = `${chord.rootNote.name} ${chord.chordType.name}`;
     const fullChordName = `${chordName}/${bassNote.name}`;
+    const chordNounSuffix = getChordNounSuffix(chord.chordType);
+    const chordLabel = `${chordName}${chordNounSuffix}`;
+    const fullChordLabel = `${fullChordName}${chordNounSuffix}`;
     const intervals = getIntervalsWithRelativeNotes(chord);
     const noteNames = intervals.map((i) => i.relativeNote.name);
     const noteList =
@@ -59,8 +63,8 @@ export async function generateMetadata({ params }) {
             ? noteNames.join(" and ")
             : noteNames.slice(0, -1).join(", ") + " and " + noteNames[noteNames.length - 1];
 
-    const title = `${fullChordName} chord`;
-    const description = `Learn how to play the ${fullChordName} chord on piano. A ${chordName} chord (${noteList}) with ${bassNote.name} as the bass note. Includes a piano keyboard diagram and related chords.`;
+    const title = fullChordLabel;
+    const description = `Learn how to play the ${fullChordLabel} on piano. A ${chordLabel} (${noteList}) with ${bassNote.name} as the bass note. Includes a piano keyboard diagram and related chords.`;
     const canonicalUrl = `${SITE_ORIGIN}/chords/${chordSlug}/${bassNoteSlug}/`;
     const imagePath = getImagePngUrlForChordSlug(chordSlug, bassNoteSlug);
     const imageUrl = `${SITE_ORIGIN}${imagePath}`;
@@ -77,7 +81,7 @@ export async function generateMetadata({ params }) {
             locale: "en_US",
             title,
             description,
-            images: [{ url: imageUrl, alt: `${fullChordName} chord piano keyboard diagram`, ...imageDimensions }]
+            images: [{ url: imageUrl, alt: `${fullChordLabel} piano keyboard diagram`, ...imageDimensions }]
         },
         twitter: {
             card: "summary_large_image",

@@ -1,4 +1,4 @@
-import { getAllScaleTypes, getAllNotes, getImagePngUrlForScaleSlug, getImageSvgUrlForScaleSlug, getSlugForScale } from "@/lib/api";
+import { getAllScaleTypes, getAllNotes, getImagePngUrlForScaleSlug, getImageSvgUrlForScaleSlug, getScaleNounSuffix, getSlugForScale } from "@/lib/api";
 import { SITE_ORIGIN } from "@/lib/constants";
 
 export const dynamic = "force-static";
@@ -31,7 +31,7 @@ export async function GET() {
     const scaleImageLocs = notes.flatMap((note) => {
         return scaleTypes.flatMap((scaleType) => {
             const scaleSlug = getSlugForScale(note, scaleType);
-            const title = `${note.name} ${scaleType.name} scale`;
+            const title = `${note.name} ${scaleType.name}${getScaleNounSuffix(scaleType)}`;
             const caption = `Piano keys with the notes for a ${title} highlighted.`;
             const pageLoc = `${SITE_ORIGIN}/scales/${scaleSlug}/`;
             const imageLocs = [`${SITE_ORIGIN}${getImagePngUrlForScaleSlug(scaleSlug)}`, `${SITE_ORIGIN}${getImageSvgUrlForScaleSlug(scaleSlug)}`];

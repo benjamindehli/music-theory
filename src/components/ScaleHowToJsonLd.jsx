@@ -1,5 +1,8 @@
+import { getScaleNounSuffix } from "@/lib/api";
+
 export default function ScaleHowToJsonLd({ scale, intervalsForScaleType }) {
     const scaleName = `${scale.rootNote.name} ${scale.scaleType.name}`;
+    const scaleLabel = `${scaleName}${getScaleNounSuffix(scale.scaleType)}`;
     const nonRootIntervals = intervalsForScaleType.filter((i) => i.number > 0);
     const noteCount = intervalsForScaleType.length;
 
@@ -23,13 +26,13 @@ export default function ScaleHowToJsonLd({ scale, intervalsForScaleType }) {
     steps.push({
         "@type": "HowToStep",
         position: position,
-        text: `Play all ${noteCount} notes in ascending order to perform the ${scaleName}`
+        text: `Play all ${noteCount} notes in ascending order to perform the ${scaleLabel}`
     });
 
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        name: `How to play the ${scaleName} on piano`,
+        name: `How to play the ${scaleLabel} on piano`,
         step: steps
     };
 

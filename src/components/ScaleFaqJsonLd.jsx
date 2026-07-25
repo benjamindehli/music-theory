@@ -1,3 +1,5 @@
+import { getScaleNounSuffix } from "@/lib/api";
+
 function formatList(items) {
     if (items.length === 1) return items[0];
     if (items.length === 2) return `${items[0]} and ${items[1]}`;
@@ -6,6 +8,7 @@ function formatList(items) {
 
 export default function ScaleFaqJsonLd({ scale, intervalsForScaleType }) {
     const scaleName = `${scale.rootNote.name} ${scale.scaleType.name}`;
+    const scaleLabel = `${scaleName}${getScaleNounSuffix(scale.scaleType)}`;
     const noteWithIntervalItems = intervalsForScaleType.map(
         (interval) => `${interval.relativeNote.name} (${interval.fullName})`
     );
@@ -18,26 +21,26 @@ export default function ScaleFaqJsonLd({ scale, intervalsForScaleType }) {
     const mainEntity = [
         {
             "@type": "Question",
-            name: `What notes are in the ${scaleName}?`,
+            name: `What notes are in the ${scaleLabel}?`,
             acceptedAnswer: {
                 "@type": "Answer",
-                text: `The ${scaleName} consists of ${noteCount} ${noteWord}: ${noteNameList}. These ${noteWord} together make up the ${scaleName}.`
+                text: `The ${scaleLabel} consists of ${noteCount} ${noteWord}: ${noteNameList}. These ${noteWord} together make up the ${scaleLabel}.`
             }
         },
         {
             "@type": "Question",
-            name: `What intervals make up the ${scaleName}?`,
+            name: `What intervals make up the ${scaleLabel}?`,
             acceptedAnswer: {
                 "@type": "Answer",
-                text: `The ${scaleName} contains the following intervals from its root note (${scale.rootNote.name}): ${noteWithIntervalList}.`
+                text: `The ${scaleLabel} contains the following intervals from its root note (${scale.rootNote.name}): ${noteWithIntervalList}.`
             }
         },
         {
             "@type": "Question",
-            name: `How do you play the ${scaleName} on piano?`,
+            name: `How do you play the ${scaleLabel} on piano?`,
             acceptedAnswer: {
                 "@type": "Answer",
-                text: `To play the ${scaleName} on piano, start on ${scale.rootNote.name} and play the following ${noteWord} in ascending order: ${noteWithIntervalList}. Each note is played one at a time, stepping through the scale from the root.`
+                text: `To play the ${scaleLabel} on piano, start on ${scale.rootNote.name} and play the following ${noteWord} in ascending order: ${noteWithIntervalList}. Each note is played one at a time, stepping through the scale from the root.`
             }
         }
     ];
